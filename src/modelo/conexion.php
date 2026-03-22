@@ -1,11 +1,23 @@
 <?php
-$servername = "localhost";
-$username = "root"; // cambia si tienes otro usuario
-$password = "";     // pon tu contraseña si tienes
-$dbname = "urban1";  // asegúrate que tu DB se llama así
+// Configuración desde variables de entorno
+$servername = getenv('DB_HOST') ?: 'localhost';
+$username   = getenv('DB_USER') ?: 'root';
+$password   = getenv('DB_PASS'); // YA NO va vacía en el código
+$dbname     = getenv('DB_NAME') ?: 'urban1';
 
+// Validar que exista contraseña
+if ($password === false || $password === "") {
+    http_response_code(500);
+    echo json_encode([
+        "error" => "La contraseña de la base de datos no está configurada correctamente"
+    ]);
+    exit;
+}
+
+// Crear conexión
 $conn = new mysqli($servername, $username, $password, $dbname);
 
+// Manejo de errores
 if ($conn->connect_error) {
     http_response_code(500);
     echo json_encode([
