@@ -18,7 +18,9 @@ import App from "./app.jsx";
 import Login from "./login.jsx";
 import Registrar from "./registrar.jsx";
 import Carrito from "./carrito.jsx";
+import MiCuenta from "./micuenta.jsx";
 import AdminHome from "./home.jsx";
+
 
 // Secciones deportivas (TIENDA PÚBLICA)
 import Lakers from "./lakers.jsx";
@@ -49,169 +51,89 @@ import Categorias from "./components/Categorias.jsx";
 // PQRS para usuarios públicos
 import PQRS from "./pqrs.jsx";
 
-// Componente para redirección inteligente de PQRS
+// ─── Guards ───────────────────────────────────────────────────────────────────
+
+// Redirección inteligente PQRS según rol
 const PqrsRedirect = () => {
   const userRole = localStorage.getItem('userRole');
-  
-  if (userRole === 'admin') {
-    return <Navigate to="/pqrs-admin" replace />;
-  }
-  return <Navigate to="/pqrs-publico" replace />;
+  return userRole === 'admin'
+    ? <Navigate to="/pqrs-admin" replace />
+    : <Navigate to="/pqrs-publico" replace />;
 };
 
-// Componente de ruta protegida para admin
+// Solo administradores
 const ProtectedAdminRoute = ({ children }) => {
-  const token = localStorage.getItem('token');
+  const token    = localStorage.getItem('token');
   const userRole = localStorage.getItem('userRole');
-
-  if (!token) {
-    return <Navigate to="/login" replace />;
-  }
-
-  if (userRole !== 'admin') {
-    return <Navigate to="/" replace />;
-  }
-
+  if (!token)              return <Navigate to="/login" replace />;
+  if (userRole !== 'admin') return <Navigate to="/" replace />;
   return children;
 };
+
+// ✅ Cualquier usuario logueado (no requiere ser admin)
+const ProtectedUserRoute = ({ children }) => {
+  const token = localStorage.getItem('token');
+  if (!token) return <Navigate to="/login" replace />;
+  return children;
+};
+
+// ─── App ──────────────────────────────────────────────────────────────────────
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          {/* ========== RUTAS PÚBLICAS (TIENDA) ========== */}
-          <Route path="/" element={<App />} />
+
+          {/* ── PÚBLICAS ── */}
+          <Route path="/"     element={<App />} />
           <Route path="/home" element={<App />} />
 
-          {/* Secciones deportivas (tienda pública) */}
-          <Route path="/lakers" element={<Lakers />} />
-          <Route path="/chicago" element={<Chicago />} />
-          <Route path="/boston" element={<Boston />} />
-          <Route path="/white" element={<White />} />
-          <Route path="/vegas" element={<Vegas />} />
-          <Route path="/atlanta" element={<Atlanta />} />
-          <Route path="/red" element={<Red />} />
-          <Route path="/arizona" element={<Arizona />} />
-          <Route path="/falcon" element={<Falcon />} />
-          <Route path="/categorias" element={<Categorias />} />
-          <Route path="/carrito" element={<Carrito />} />
+          <Route path="/lakers"    element={<Lakers />} />
+          <Route path="/chicago"   element={<Chicago />} />
+          <Route path="/boston"    element={<Boston />} />
+          <Route path="/white"     element={<White />} />
+          <Route path="/vegas"     element={<Vegas />} />
+          <Route path="/atlanta"   element={<Atlanta />} />
+          <Route path="/red"       element={<Red />} />
+          <Route path="/arizona"   element={<Arizona />} />
+          <Route path="/falcon"    element={<Falcon />} />
+          <Route path="/categorias"   element={<Categorias />} />
+          <Route path="/carrito"      element={<Carrito />} />
+          <Route path="/login"        element={<Login />} />
+          <Route path="/registrar"    element={<Registrar />} />
+          <Route path="/personalizacion" element={<PersonalizacionComponent />} />
+          <Route path="/mi-cuenta" element={<ProtectedUserRoute><MiCuenta /></ProtectedUserRoute>} />
 
-          {/* Autenticación */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/registrar" element={<Registrar />} />
 
-          {/* ========== PQRS CON REDIRECCIÓN INTELIGENTE ========== */}
-          {/* Ruta general que redirige según el rol */}
-          <Route path="/pqrs" element={<PqrsRedirect />} />
-          
-          {/* PQRS público (usuarios normales) */}
+          {/* ── PQRS ── */}
+          <Route path="/pqrs"         element={<PqrsRedirect />} />
           <Route path="/pqrs-publico" element={<PQRS />} />
-          
-          {/* PQRS admin (solo administradores) */}
-          <Route 
-            path="/pqrs-admin" 
+          <Route
+            path="/pqrs-admin"
             element={
               <ProtectedAdminRoute>
                 <PqrsAdmin />
               </ProtectedAdminRoute>
-            } 
+            }
           />
 
-          <Route path="/personalizacion" element={<PersonalizacionComponent />} />
+          {/* ── ADMIN ── */}
+          <Route path="/admin"         element={<ProtectedAdminRoute><AdminHome /></ProtectedAdminRoute>} />
+          <Route path="/usuarios"      element={<ProtectedAdminRoute><Usuarios /></ProtectedAdminRoute>} />
+          <Route path="/roles"         element={<ProtectedAdminRoute><RolesComponent /></ProtectedAdminRoute>} />
+          <Route path="/inventario"    element={<ProtectedAdminRoute><Inventario /></ProtectedAdminRoute>} />
+          <Route path="/pago"          element={<ProtectedAdminRoute><Pago /></ProtectedAdminRoute>} />
+          <Route path="/envios"        element={<ProtectedAdminRoute><Envios /></ProtectedAdminRoute>} />
+          <Route path="/registros"     element={<ProtectedAdminRoute><Registros /></ProtectedAdminRoute>} />
+          <Route path="/ventas"        element={<ProtectedAdminRoute><Ventas /></ProtectedAdminRoute>} />
+          <Route path="/pedido"        element={<ProtectedAdminRoute><Pedido /></ProtectedAdminRoute>} />
+          <Route path="/reportes"      element={<ProtectedAdminRoute><Reportes /></ProtectedAdminRoute>} />
+          <Route path="/configuracion" element={<ProtectedAdminRoute><Configuracion /></ProtectedAdminRoute>} />
 
-          {/* ========== RUTAS ADMINISTRATIVAS (PROTEGIDAS) ========== */}
-          <Route 
-            path="/admin" 
-            element={
-              <ProtectedAdminRoute>
-                <AdminHome />
-              </ProtectedAdminRoute>
-            } 
-          />
-          <Route 
-            path="/usuarios" 
-            element={
-              <ProtectedAdminRoute>
-                <Usuarios />
-              </ProtectedAdminRoute>
-            } 
-          />
-          <Route 
-            path="/roles" 
-            element={
-              <ProtectedAdminRoute>
-                <RolesComponent />
-              </ProtectedAdminRoute>
-            } 
-          />
-          <Route 
-            path="/inventario" 
-            element={
-              <ProtectedAdminRoute>
-                <Inventario />
-              </ProtectedAdminRoute>
-            } 
-          />
-          <Route 
-            path="/pago" 
-            element={
-              <ProtectedAdminRoute>
-                <Pago />
-              </ProtectedAdminRoute>
-            } 
-          />
-          <Route 
-            path="/envios" 
-            element={
-              <ProtectedAdminRoute>
-                <Envios />
-              </ProtectedAdminRoute>
-            } 
-          />
-          <Route 
-            path="/registros" 
-            element={
-              <ProtectedAdminRoute>
-                <Registros />
-              </ProtectedAdminRoute>
-            } 
-          />
-          <Route 
-            path="/ventas" 
-            element={
-              <ProtectedAdminRoute>
-                <Ventas />
-              </ProtectedAdminRoute>
-            } 
-          />
-          <Route 
-            path="/pedido" 
-            element={
-              <ProtectedAdminRoute>
-                <Pedido />
-              </ProtectedAdminRoute>
-            } 
-          />
-          <Route 
-            path="/reportes" 
-            element={
-              <ProtectedAdminRoute>
-                <Reportes />
-              </ProtectedAdminRoute>
-            } 
-          />
-          <Route 
-            path="/configuracion" 
-            element={
-              <ProtectedAdminRoute>
-                <Configuracion />
-              </ProtectedAdminRoute>
-            } 
-          />
-
-          {/* Ruta 404 */}
+          {/* ── 404 ── */}
           <Route path="*" element={<Navigate to="/" replace />} />
+
         </Routes>
       </BrowserRouter>
     </AuthProvider>

@@ -32,38 +32,25 @@ function App() {
   };
 
   const agregarAlCarrito = (id_producto, nombre, precio, imagen) => {
-    // Verificar si el usuario está logueado (revisando el token)
     const token = localStorage.getItem('token');
     const usuarioLogueado = localStorage.getItem('usuarioLogueado');
-    
+
     if (!token || !usuarioLogueado) {
       alert('⚠️ Debes iniciar sesión para agregar productos al carrito');
       window.location.href = '/login';
       return;
     }
-    
+
     const carrito = JSON.parse(localStorage.getItem('carritoUrbanCops')) || [];
-    
-    // ✅ AHORA SÍ GUARDAMOS EL ID
-    carrito.push({ 
-      id_producto: id_producto,
-      nombre: nombre, 
-      precio: precio, 
-      imagen: imagen,
-      cantidad: 1
-    });
-    
+    carrito.push({ id_producto, nombre, precio, imagen, cantidad: 1 });
     localStorage.setItem('carritoUrbanCops', JSON.stringify(carrito));
     actualizarContadorCarrito();
     alert('✅ ¡Producto agregado al carrito!');
   };
 
-  // 🆕 FUNCIÓN AGREGADA PARA MANEJAR LA BÚSQUEDA
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      if (busqueda.trim()) {
-        window.location.href = `/busqueda?q=${encodeURIComponent(busqueda)}`;
-      }
+    if (e.key === 'Enter' && busqueda.trim()) {
+      window.location.href = `/busqueda?q=${encodeURIComponent(busqueda)}`;
     }
   };
 
@@ -88,9 +75,7 @@ function App() {
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               {/* NBA */}
               <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle fw-bold" href="#" data-bs-toggle="dropdown">
-                  NBA
-                </a>
+                <a className="nav-link dropdown-toggle fw-bold" href="#" data-bs-toggle="dropdown">NBA</a>
                 <ul className="dropdown-menu">
                   <li><a className="dropdown-item" href="/chicago">Chicago Bulls</a></li>
                   <li><a className="dropdown-item" href="/boston">Boston Celtics</a></li>
@@ -100,9 +85,7 @@ function App() {
 
               {/* NFL */}
               <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle fw-bold" href="#" data-bs-toggle="dropdown">
-                  NFL
-                </a>
+                <a className="nav-link dropdown-toggle fw-bold" href="#" data-bs-toggle="dropdown">NFL</a>
                 <ul className="dropdown-menu">
                   <li><a className="dropdown-item" href="/falcon">Atlanta Falcons</a></li>
                   <li><a className="dropdown-item" href="/arizona">Arizona Cardinals</a></li>
@@ -112,9 +95,7 @@ function App() {
 
               {/* MLB */}
               <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle fw-bold" href="#" data-bs-toggle="dropdown">
-                  MLB
-                </a>
+                <a className="nav-link dropdown-toggle fw-bold" href="#" data-bs-toggle="dropdown">MLB</a>
                 <ul className="dropdown-menu">
                   <li><a className="dropdown-item" href="/red">Boston Red Sox</a></li>
                   <li><a className="dropdown-item" href="/white">Chicago White Sox</a></li>
@@ -130,6 +111,7 @@ function App() {
               </li>
             </ul>
 
+            {/* BUSCADOR */}
             <div className="d-flex me-3">
               <input
                 id="barra-busqueda"
@@ -143,31 +125,43 @@ function App() {
               />
             </div>
 
+            {/* ✅ BLOQUE USUARIO CORREGIDO — el icono Mi Cuenta está DENTRO del condicional */}
             {usuario ? (
               <>
-                <span className="text-white me-3">
-                  <i className="bi bi-person-circle"></i> ¡Hola, {usuario.nombre}!
-                </span>
+                {/* 👤 Icono Mi Cuenta — solo aparece si hay sesión iniciada */}
+                <a
+                  href="/mi-cuenta"
+                  className="btn text-white me-2 d-flex align-items-center gap-1"
+                  title="Mi Cuenta"
+                  style={{ textDecoration: 'none' }}
+                >
+                  <i className="bi bi-person-circle" style={{ fontSize: 20 }}></i>
+                  <span style={{ fontSize: 14 }}>{usuario.nombre.split(' ')[0]}</span>
+                </a>
+
+                {/* Botón cerrar sesión */}
                 <button
                   className="btn btn-outline-danger me-2"
                   onClick={cerrarSesion}
-                  style={{fontSize: '14px', padding: '8px 16px'}}
+                  style={{ fontSize: '14px', padding: '8px 16px' }}
                 >
                   <i className="bi bi-box-arrow-right"></i> Cerrar Sesión
                 </button>
               </>
             ) : (
+              // Si NO hay sesión, muestra botón de iniciar sesión
               <a href="/login" className="btn text-white me-2">
                 <i className="bi bi-person"></i> Iniciar Sesión
               </a>
             )}
-            
+
+            {/* CARRITO */}
             <button
               className="btn text-white position-relative"
               onClick={() => (window.location.href = '/carrito')}
             >
               <i className="bi bi-cart"></i>
-              <span id="contador-carrito" className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                 {contadorCarrito}
               </span>
             </button>
@@ -175,7 +169,7 @@ function App() {
         </div>
       </nav>
 
-      {/* CARRUSEL PRINCIPAL full-width */}
+      {/* CARRUSEL PRINCIPAL */}
       <div className="container-fluid p-0">
         <div id="carouselExampleControls" className="carousel slide" data-bs-ride="carousel">
           <div className="carousel-inner">
@@ -189,7 +183,6 @@ function App() {
               <img src="/img/Contanerc.webp" className="d-block w-100" alt="Slide 3" style={{height: 500, objectFit: 'cover'}} />
             </div>
           </div>
-
           <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
             <span className="carousel-control-prev-icon"></span>
             <span className="visually-hidden">Anterior</span>
@@ -201,7 +194,7 @@ function App() {
         </div>
       </div>
 
-      {/* SECCIONES (NBA) */}
+      {/* SECCIÓN NBA */}
       <section className="container my-5 text-center">
         <h2>NBA</h2>
         <p>Explora nuestra colección de gorras oficiales de la NBA.</p>
@@ -215,17 +208,15 @@ function App() {
               <button className="btn btn-primary w-100" onClick={() => agregarAlCarrito(1, 'Chicago Bulls', 95000, '/img/chicago.png')}>Agregar al carrito</button>
             </div>
           </div>
-
           <div className="col-md-4 mb-4">
             <div className="p-3 rounded text-dark-bg">
               <h3>Boston Celtics</h3>
-              <img src="img/Raiders12.png" className="img-fluid my-2" alt="Boston" style={{height: 100, objectFit: 'cover'}} />
+              <img src="/img/Raiders12.png" className="img-fluid my-2" alt="Boston" style={{height: 100, objectFit: 'cover'}} />
               <p>Gorra con logotipo bordado y diseño premium.</p>
               <p className="fw-bold">$92.000 COP</p>
               <button className="btn btn-primary w-100" onClick={() => agregarAlCarrito(2, 'Boston Celtics', 92000, '/img/Adobe-Express-file.png')}>Agregar al carrito</button>
             </div>
           </div>
-
           <div className="col-md-4 mb-4">
             <div className="p-3 rounded text-dark-bg">
               <h3>Los Angeles Lakers</h3>
@@ -252,7 +243,6 @@ function App() {
               <button className="btn btn-primary w-100" onClick={() => agregarAlCarrito(4, 'Atlanta Falcons', 95000, '/img/Atlanta12.png')}>Agregar al carrito</button>
             </div>
           </div>
-
           <div className="col-md-4 mb-4">
             <div className="p-3 rounded text-dark-bg">
               <h3>Arizona Cardinals</h3>
@@ -262,7 +252,6 @@ function App() {
               <button className="btn btn-primary w-100" onClick={() => agregarAlCarrito(5, 'Arizona Cardinals', 92000, '/img/Arizona12.png')}>Agregar al carrito</button>
             </div>
           </div>
-
           <div className="col-md-4 mb-4">
             <div className="p-3 rounded text-dark-bg">
               <h3>Las Vegas Raiders</h3>
@@ -280,24 +269,16 @@ function App() {
         <h2 className="text-center mb-4">Colecciones Destacadas</h2>
         <div className="row row-cols-1 row-cols-md-2 g-3">
           <div className="col">
-            <a href="/categorias">
-              <img src="/img/sti.webp" alt="Imagen 1" className="img-fluid my-2" style={{width: '100%', height: 500, objectFit: 'cover', borderRadius: 10}} />
-            </a>
+            <a href="/categorias"><img src="/img/sti.webp" alt="Imagen 1" className="img-fluid my-2" style={{width: '100%', height: 500, objectFit: 'cover', borderRadius: 10}} /></a>
           </div>
           <div className="col">
-            <a href="/categorias">
-              <img src="/img/NIgga.webp" alt="Imagen 2" className="img-fluid my-2" style={{width: '100%', height: 500, objectFit: 'cover', borderRadius: 10}} />
-            </a>
+            <a href="/categorias"><img src="/img/NIgga.webp" alt="Imagen 2" className="img-fluid my-2" style={{width: '100%', height: 500, objectFit: 'cover', borderRadius: 10}} /></a>
           </div>
           <div className="col">
-            <a href="/categorias">
-              <img src="/img/blanco.webp" alt="Imagen 3" className="img-fluid my-2" style={{width: '100%', height: 500, objectFit: 'cover', borderRadius: 10}} />
-            </a>
+            <a href="/categorias"><img src="/img/blanco.webp" alt="Imagen 3" className="img-fluid my-2" style={{width: '100%', height: 500, objectFit: 'cover', borderRadius: 10}} /></a>
           </div>
           <div className="col">
-            <a href="/categorias">
-              <img src="/img/rap.webp" alt="Imagen 4" className="img-fluid my-2" style={{width: '100%', height: 500, objectFit: 'cover', borderRadius: 10}} />
-            </a>
+            <a href="/categorias"><img src="/img/rap.webp" alt="Imagen 4" className="img-fluid my-2" style={{width: '100%', height: 500, objectFit: 'cover', borderRadius: 10}} /></a>
           </div>
         </div>
       </div>
@@ -316,7 +297,6 @@ function App() {
               <img src="/img/desktop-wallpaper-colourful-caps-caps.jpg" className="d-block w-100" alt="Slide 3" style={{height: 400, objectFit: 'cover'}} />
             </div>
           </div>
-
           <button className="carousel-control-prev" type="button" data-bs-target="#carouselFooter" data-bs-slide="prev">
             <span className="carousel-control-prev-icon"></span>
             <span className="visually-hidden">Anterior</span>
@@ -341,7 +321,6 @@ function App() {
                 <a href="#" className="text-white"><i className="bi bi-whatsapp"></i></a>
               </div>
             </div>
-
             <div className="col-md-4 mb-4">
               <h5 className="fw-bold">Enlaces Rápidos</h5>
               <ul className="list-unstyled">
@@ -352,7 +331,6 @@ function App() {
                 <li><a href="/personalizacion" className="text-white text-decoration-none">Personalizadas</a></li>
               </ul>
             </div>
-
             <div className="col-md-4 mb-4">
               <h5 className="fw-bold">Contacto</h5>
               <p><i className="bi bi-envelope"></i> contacto@urbancops.com</p>
@@ -360,9 +338,7 @@ function App() {
               <p><i className="bi bi-geo-alt"></i> Bogotá, Colombia</p>
             </div>
           </div>
-
           <hr className="border-gray" />
-
           <div className="text-center small">
             &copy; {new Date().getFullYear()} UrbanCops. Todos los derechos reservados.
           </div>
