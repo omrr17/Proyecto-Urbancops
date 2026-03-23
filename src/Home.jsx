@@ -145,7 +145,7 @@ export default function Home() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    window.location.href = "/login";
+    globalThis.location.href = "/login";
   };
 
   const getRoleText = (roleId) => {
@@ -303,7 +303,7 @@ export default function Home() {
         <div style={styles.grid}>
           {modules.map((module, index) => (
             <a 
-              key={index}
+              key={post.id}
               href={module.path}
               style={styles.moduleCard}
               className="module-hover"

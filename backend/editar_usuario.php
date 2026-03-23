@@ -20,8 +20,8 @@ if ($id && $data) {
     $correo = $conn->real_escape_string($data["correo"]);
 
     $sql = "UPDATE usuarios 
-            SET nombre='$nombre', apellido='$apellido', documento='$documento', correo='$correo'
-            WHERE id_usuario=$id";
+        SET nombre='$nombre', apellido='$apellido', documento='$documento', correo='$correo'
+        WHERE id_usuario=$id";
 
     if ($conn->query($sql)) {
         echo json_encode(["message" => "Usuario actualizado correctamente"]);
@@ -35,4 +35,4 @@ if ($id && $data) {
 } else {
     echo json_encode(["error" => "Faltan datos o ID"]);
 }
-?>
+

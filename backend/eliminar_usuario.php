@@ -26,4 +26,4 @@ if ($id) {
 } else {
     echo json_encode(["error" => "No se envió ID"]);
 }
-?>
+

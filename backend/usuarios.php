@@ -22,4 +22,3 @@ if ($result) {
         "detalle" => $conn->error
     ]);
 }
-?>

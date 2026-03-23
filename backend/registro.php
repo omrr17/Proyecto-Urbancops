@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../src/modelo/conexion.php';
 
-header("Access-Control-Allow-Origin: *");
+header( "Access-Control-Allow-Origin: $trusteddomain " );
 header("Access-Control-Allow-Headers: Content-Type");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Content-Type: application/json; charset=UTF-8");
@@ -23,7 +23,7 @@ $documento = $conn->real_escape_string($data["documento"]);
 $correo = $conn->real_escape_string($data["correo"]);
 
 $sql = "INSERT INTO usuarios (nombre, apellido, documento, correo) 
-        VALUES ('$nombre', '$apellido', '$documento', '$correo')";
+    VALUES ('$nombre', '$apellido', '$documento', '$correo')";
 
 if ($conn->query($sql)) {
     echo json_encode([
@@ -43,4 +43,4 @@ if ($conn->query($sql)) {
         "sql" => $sql
     ]);
 }
-?>
+

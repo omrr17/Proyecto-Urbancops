@@ -22,7 +22,7 @@ function App() {
       localStorage.removeItem('usuarioLogueado');
       localStorage.removeItem('token');
       localStorage.removeItem('carritoUrbanCops');
-      window.location.href = '/';
+      globalThis.location.href = '/';
     }
   };
 
@@ -37,7 +37,7 @@ function App() {
 
     if (!token || !usuarioLogueado) {
       alert('⚠️ Debes iniciar sesión para agregar productos al carrito');
-      window.location.href = '/login';
+      globalThis.location.href = '/login';
       return;
     }
 
@@ -50,7 +50,7 @@ function App() {
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && busqueda.trim()) {
-      window.location.href = `/busqueda?q=${encodeURIComponent(busqueda)}`;
+      globalThis.location.href = `/busqueda?q=${encodeURIComponent(busqueda)}`;
     }
   };
 
@@ -158,7 +158,7 @@ function App() {
             {/* CARRITO */}
             <button
               className="btn text-white position-relative"
-              onClick={() => (window.location.href = '/carrito')}
+              onClick={() => (globalThis.location.href = '/carrito')}
             >
               <i className="bi bi-cart"></i>
               <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">

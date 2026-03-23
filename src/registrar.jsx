@@ -60,9 +60,7 @@ function Registrar() {
       setCargando(false);
       return;
     }
-
-    // Validar formato de correo
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const emailRegex = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(formData.correo)) {
       setTipo("danger");
       setMensaje("❌ Por favor ingresa un correo válido");
