@@ -189,7 +189,7 @@ export default function Vegas() {
             <div className="col-md-4 mb-4">
               <h5 className="fw-bold">UrbanCops</h5>
               <p>Gorras urbanas exclusivas con estilo auténtico. Representa tu equipo, tu barrio y tu esencia.</p>
-              {/* ✅ FIX: <button> en lugar de <a href="#"> */}
+             
               <div>
                 <button
                   className="btn text-white me-3 p-0 border-0 bg-transparent"
