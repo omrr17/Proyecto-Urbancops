@@ -132,9 +132,14 @@ const Rol = ({ token: propToken }) => {
     }
   };
 
-  // ✅ Handlers de teclado para modales
-  const handleModalKeyDown = (closeFn) => (e) => {
-    if (e.key === "Enter" || e.key === " " || e.key === "Escape") {
+  // ✅ Fix: solo cierra si el evento viene del overlay, no del contenido interior
+  const handleOverlayClick = (closeFn) => (e) => {
+    if (e.target === e.currentTarget) closeFn();
+  };
+
+  const handleOverlayKeyDown = (closeFn) => (e) => {
+    if (e.target === e.currentTarget &&
+       (e.key === "Enter" || e.key === " " || e.key === "Escape")) {
       closeFn();
     }
   };
@@ -195,7 +200,6 @@ const Rol = ({ token: propToken }) => {
 
       <div style={styles.content}>
         <div style={styles.header}>
-          {/* ✅ Fix: espaciado ambiguo corregido con {" "} */}
           <h1 style={styles.title}>
             <span>👥</span>{" "}GESTIÓN DE ROLES
           </h1>
@@ -232,7 +236,6 @@ const Rol = ({ token: propToken }) => {
                 disabled={loading}
               />
             </div>
-            {/* ✅ Fix: label asociado al textarea con htmlFor */}
             <label htmlFor="descripcion_rol" style={{ display: "block", marginBottom: "8px", color: "#999999", fontSize: "14px" }}>
               Descripción
             </label>
@@ -315,32 +318,29 @@ const Rol = ({ token: propToken }) => {
         </div>
       </div>
 
-      {/* ✅ Modal de Edición - Fix: role, tabIndex, onKeyDown, aria */}
+      {/* ✅ Modal de Edición */}
       {showEditModal && editingRol && (
         <div
           style={styles.modal}
           role="button"
           tabIndex={0}
           aria-label="Cerrar modal de edición"
-          onClick={() => setShowEditModal(false)}
-          onKeyDown={handleModalKeyDown(() => setShowEditModal(false))}
+          onClick={handleOverlayClick(() => setShowEditModal(false))}
+          onKeyDown={handleOverlayKeyDown(() => setShowEditModal(false))}
         >
+          {/* ✅ Fix: sin onClick ni onKeyDown en el dialog */}
           <div
             style={styles.modalContent}
             role="dialog"
             aria-modal="true"
             aria-labelledby="edit-modal-title"
-            onClick={(e) => e.stopPropagation()}
-            onKeyDown={(e) => e.stopPropagation()}
           >
             <div style={styles.modalHeader}>
-              {/* ✅ Fix: espaciado ambiguo */}
               <span>✏️</span>{" "}
               <span id="edit-modal-title">EDITAR ROL</span>
             </div>
 
             <div style={{ marginBottom: "16px" }}>
-              {/* ✅ Fix: label asociado con htmlFor */}
               <label htmlFor="edit_nombre_rol" style={{ display: "block", marginBottom: "8px", color: "#999999", fontSize: "14px" }}>
                 Nombre del Rol
               </label>
@@ -356,7 +356,6 @@ const Rol = ({ token: propToken }) => {
             </div>
 
             <div style={{ marginBottom: "16px" }}>
-              {/* ✅ Fix: label asociado con htmlFor */}
               <label htmlFor="edit_descripcion" style={{ display: "block", marginBottom: "8px", color: "#999999", fontSize: "14px" }}>
                 Descripción
               </label>
@@ -391,23 +390,22 @@ const Rol = ({ token: propToken }) => {
         </div>
       )}
 
-      {/* ✅ Modal de Eliminación - Fix: role, tabIndex, onKeyDown, aria */}
+      {/* ✅ Modal de Eliminación */}
       {showDeleteModal && deletingRol && (
         <div
           style={styles.modal}
           role="button"
           tabIndex={0}
           aria-label="Cerrar modal de eliminación"
-          onClick={() => setShowDeleteModal(false)}
-          onKeyDown={handleModalKeyDown(() => setShowDeleteModal(false))}
+          onClick={handleOverlayClick(() => setShowDeleteModal(false))}
+          onKeyDown={handleOverlayKeyDown(() => setShowDeleteModal(false))}
         >
+          {/* ✅ Fix: sin onClick ni onKeyDown en el dialog */}
           <div
             style={styles.modalContent}
             role="dialog"
             aria-modal="true"
             aria-labelledby="delete-modal-title"
-            onClick={(e) => e.stopPropagation()}
-            onKeyDown={(e) => e.stopPropagation()}
           >
             <div style={styles.modalHeader}>
               <span>⚠️</span>{" "}
@@ -445,7 +443,6 @@ const Rol = ({ token: propToken }) => {
   );
 };
 
-// ✅ Fix: token declarado en propTypes
 Rol.propTypes = {
   token: PropTypes.string.isRequired,
 };

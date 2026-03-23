@@ -49,7 +49,6 @@ const Ventas = () => {
       setLoading(true);
       setError("");
       await createVenta({
-        // ✅ Fix: Number.parseInt en lugar de parseInt
         id_usuario: Number.parseInt(newVenta.id_usuario, 10),
         fecha: newVenta.fecha
       }, token);
@@ -73,7 +72,6 @@ const Ventas = () => {
       setLoading(true);
       setError("");
       await updateVenta(editingVenta.id_venta, {
-        // ✅ Fix: Number.parseInt en lugar de parseInt
         id_usuario: Number.parseInt(editingVenta.id_usuario, 10),
         fecha: editingVenta.fecha
       }, token);
@@ -104,9 +102,14 @@ const Ventas = () => {
     }
   };
 
-  // ✅ Handler de teclado reutilizable para modales
-  const handleModalKeyDown = (closeFn) => (e) => {
-    if (e.key === "Enter" || e.key === " " || e.key === "Escape") {
+  // ✅ Solo cierra si el click/tecla viene del overlay, no del contenido interior
+  const handleOverlayClick = (closeFn) => (e) => {
+    if (e.target === e.currentTarget) closeFn();
+  };
+
+  const handleOverlayKeyDown = (closeFn) => (e) => {
+    if (e.target === e.currentTarget &&
+       (e.key === "Enter" || e.key === " " || e.key === "Escape")) {
       closeFn();
     }
   };
@@ -145,7 +148,6 @@ const Ventas = () => {
 
         {/* Header */}
         <div style={{ marginBottom: "40px" }}>
-          {/* ✅ Fix: espaciado ambiguo con {" "} */}
           <h1 style={{ fontSize: "42px", fontWeight: "bold", marginBottom: "8px", display: "flex", alignItems: "center", gap: "16px" }}>
             <span>📊</span>{" "}GESTIÓN DE VENTAS
           </h1>
@@ -157,7 +159,6 @@ const Ventas = () => {
         {/* Card */}
         <div style={{ background: "#111", border: "1px solid #222", borderRadius: "12px", padding: "32px" }}>
 
-          {/* Alertas */}
           {error && (
             <div style={{ background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.3)", padding: "16px", borderRadius: "6px", marginBottom: "24px", display: "flex", alignItems: "center", gap: "12px" }}>
               <span style={{ fontSize: "20px" }}>⚠️</span>
@@ -178,7 +179,6 @@ const Ventas = () => {
               ➕ Registrar Nueva Venta
             </h3>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "12px", marginBottom: "12px" }}>
-              {/* ✅ Fix: label asociado con htmlFor */}
               <div>
                 <label htmlFor="nuevo_id_usuario" style={{ display: "block", marginBottom: "6px", color: "#999", fontSize: "13px" }}>
                   ID Usuario
@@ -193,7 +193,6 @@ const Ventas = () => {
                   style={{ background: "#000", border: "1px solid #222", borderRadius: "6px", padding: "14px 16px", color: "#fff", fontSize: "14px", outline: "none", width: "100%" }}
                 />
               </div>
-              {/* ✅ Fix: label asociado con htmlFor */}
               <div>
                 <label htmlFor="nueva_fecha" style={{ display: "block", marginBottom: "6px", color: "#999", fontSize: "13px" }}>
                   Fecha
@@ -277,31 +276,28 @@ const Ventas = () => {
         </div>
       </div>
 
-      {/* ✅ Modal Editar - Fix completo de accesibilidad */}
+      {/* ✅ Modal Editar */}
       {editingVenta && (
         <div
           style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, background: "rgba(0,0,0,0.8)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, padding: "20px" }}
           role="button"
           tabIndex={0}
           aria-label="Cerrar modal de edición"
-          onClick={() => setEditingVenta(null)}
-          onKeyDown={handleModalKeyDown(() => setEditingVenta(null))}
+          onClick={handleOverlayClick(() => setEditingVenta(null))}
+          onKeyDown={handleOverlayKeyDown(() => setEditingVenta(null))}
         >
+          {/* ✅ Fix: sin onClick ni onKeyDown en el dialog */}
           <div
             style={{ background: "#111", border: "1px solid #222", borderRadius: "12px", padding: "32px", maxWidth: "500px", width: "100%" }}
             role="dialog"
             aria-modal="true"
             aria-labelledby="edit-venta-title"
-            onClick={(e) => e.stopPropagation()}
-            onKeyDown={(e) => e.stopPropagation()}
           >
-            {/* ✅ Fix: espaciado ambiguo */}
             <h2 id="edit-venta-title" style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "24px", display: "flex", alignItems: "center", gap: "12px" }}>
               <span>✏️</span>{" "}EDITAR VENTA
             </h2>
 
             <div style={{ marginBottom: "20px" }}>
-              {/* ✅ Fix: label asociado con htmlFor */}
               <label htmlFor="edit_id_usuario" style={{ display: "block", marginBottom: "8px", color: "#999", fontSize: "14px", fontWeight: "600" }}>
                 ID Usuario
               </label>
@@ -316,7 +312,6 @@ const Ventas = () => {
             </div>
 
             <div style={{ marginBottom: "20px" }}>
-              {/* ✅ Fix: label asociado con htmlFor */}
               <label htmlFor="edit_fecha" style={{ display: "block", marginBottom: "8px", color: "#999", fontSize: "14px", fontWeight: "600" }}>
                 Fecha
               </label>
@@ -331,10 +326,18 @@ const Ventas = () => {
             </div>
 
             <div style={{ display: "flex", gap: "12px", marginTop: "24px", justifyContent: "flex-end" }}>
-              <button onClick={() => setEditingVenta(null)} disabled={loading} style={{ background: "#374151", color: "#fff", border: "none", padding: "14px 28px", borderRadius: "6px", cursor: "pointer", fontWeight: "600", fontSize: "14px" }}>
+              <button
+                onClick={() => setEditingVenta(null)}
+                disabled={loading}
+                style={{ background: "#374151", color: "#fff", border: "none", padding: "14px 28px", borderRadius: "6px", cursor: "pointer", fontWeight: "600", fontSize: "14px" }}
+              >
                 CANCELAR
               </button>
-              <button onClick={handleUpdateVenta} disabled={loading} style={{ background: loading ? "#374151" : "#10b981", color: "#fff", border: "none", padding: "14px 28px", borderRadius: "6px", cursor: loading ? "not-allowed" : "pointer", fontWeight: "600", fontSize: "14px" }}>
+              <button
+                onClick={handleUpdateVenta}
+                disabled={loading}
+                style={{ background: loading ? "#374151" : "#10b981", color: "#fff", border: "none", padding: "14px 28px", borderRadius: "6px", cursor: loading ? "not-allowed" : "pointer", fontWeight: "600", fontSize: "14px" }}
+              >
                 {loading ? "⏳ GUARDANDO..." : "💾 GUARDAR"}
               </button>
             </div>
@@ -342,25 +345,23 @@ const Ventas = () => {
         </div>
       )}
 
-      {/* ✅ Modal Eliminar - Fix completo de accesibilidad */}
+      {/* ✅ Modal Eliminar */}
       {deletingVenta && (
         <div
           style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, background: "rgba(0,0,0,0.8)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, padding: "20px" }}
           role="button"
           tabIndex={0}
           aria-label="Cerrar modal de eliminación"
-          onClick={() => setDeletingVenta(null)}
-          onKeyDown={handleModalKeyDown(() => setDeletingVenta(null))}
+          onClick={handleOverlayClick(() => setDeletingVenta(null))}
+          onKeyDown={handleOverlayKeyDown(() => setDeletingVenta(null))}
         >
+          {/* ✅ Fix: sin onClick ni onKeyDown en el dialog */}
           <div
             style={{ background: "#111", border: "1px solid #222", borderRadius: "12px", padding: "32px", maxWidth: "500px", width: "100%" }}
             role="dialog"
             aria-modal="true"
             aria-labelledby="delete-venta-title"
-            onClick={(e) => e.stopPropagation()}
-            onKeyDown={(e) => e.stopPropagation()}
           >
-            {/* ✅ Fix: espaciado ambiguo */}
             <h2 id="delete-venta-title" style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "24px", display: "flex", alignItems: "center", gap: "12px" }}>
               <span>⚠️</span>{" "}CONFIRMAR ELIMINACIÓN
             </h2>
@@ -373,10 +374,18 @@ const Ventas = () => {
             </p>
 
             <div style={{ display: "flex", gap: "12px", marginTop: "24px", justifyContent: "flex-end" }}>
-              <button onClick={() => setDeletingVenta(null)} disabled={loading} style={{ background: "#374151", color: "#fff", border: "none", padding: "14px 28px", borderRadius: "6px", cursor: "pointer", fontWeight: "600", fontSize: "14px" }}>
+              <button
+                onClick={() => setDeletingVenta(null)}
+                disabled={loading}
+                style={{ background: "#374151", color: "#fff", border: "none", padding: "14px 28px", borderRadius: "6px", cursor: "pointer", fontWeight: "600", fontSize: "14px" }}
+              >
                 CANCELAR
               </button>
-              <button onClick={handleDeleteVenta} disabled={loading} style={{ background: loading ? "#374151" : "#ef4444", color: "#fff", border: "none", padding: "14px 28px", borderRadius: "6px", cursor: loading ? "not-allowed" : "pointer", fontWeight: "600", fontSize: "14px" }}>
+              <button
+                onClick={handleDeleteVenta}
+                disabled={loading}
+                style={{ background: loading ? "#374151" : "#ef4444", color: "#fff", border: "none", padding: "14px 28px", borderRadius: "6px", cursor: loading ? "not-allowed" : "pointer", fontWeight: "600", fontSize: "14px" }}
+              >
                 {loading ? "⏳ ELIMINANDO..." : "🗑️ ELIMINAR"}
               </button>
             </div>
