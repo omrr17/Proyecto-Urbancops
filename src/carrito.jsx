@@ -262,9 +262,11 @@ function Carrito() {
                       </small>
                     </div>
 
+
                     <div className="mb-3">
-                      <label className="form-label fw-bold">Ciudad *</label>
+                      <label htmlFor="ciudad" className="form-label fw-bold">Ciudad *</label>
                       <input
+                        id="ciudad"
                         type="text"
                         className="form-control"
                         placeholder="Ej: Bogotá"
@@ -278,8 +280,9 @@ function Carrito() {
                     </div>
 
                     <div className="mb-3">
-                      <label className="form-label fw-bold">Teléfono *</label>
+                      <label htmlFor="telefono" className="form-label fw-bold">Teléfono *</label>
                       <input
+                        id="telefono"
                         type="tel"
                         className="form-control"
                         placeholder="Ej: 3001234567"
@@ -291,7 +294,6 @@ function Carrito() {
                         required
                       />
                     </div>
-
                     <hr />
 
                     <h5 className="mb-3">💳 Método de Pago</h5>
@@ -358,10 +360,10 @@ function Carrito() {
                         onClick={finalizarCompra}
                         disabled={procesando}
                       >
+              
                         {procesando ? (
                           <>
-                            <span className="spinner-border spinner-border-sm me-2"></span>
-                            Procesando...
+                            <span className="spinner-border spinner-border-sm me-2"></span>Procesando...
                           </>
                         ) : (
                           <>
