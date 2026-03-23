@@ -4,25 +4,21 @@ import { listPqrs, createPqrs, updatePqrs, deletePqrs } from '../services/PqrsSe
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-
 const PqrsAdmin = () => {
   const navigate = useNavigate();
   const [pqrsList, setPqrsList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  
-  // Modal states
+
   const [showModal, setShowModal] = useState(false);
   const [showViewModal, setShowViewModal] = useState(false);
   const [modalMode, setModalMode] = useState('create');
   const [selectedPqrs, setSelectedPqrs] = useState(null);
-  
-  // Filtros
+
   const [searchTerm, setSearchTerm] = useState('');
   const [filterTipo, setFilterTipo] = useState('');
   const [filterEstado, setFilterEstado] = useState('');
-  
-  // Form data
+
   const [formData, setFormData] = useState({
     nombre: '',
     correo: '',
@@ -53,19 +49,14 @@ const PqrsAdmin = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     try {
       setLoading(true);
       setError(null);
-      
       const dataToSend = {
         nombre: formData.nombre.trim(),
         correo: formData.correo.trim(),
@@ -74,7 +65,6 @@ const PqrsAdmin = () => {
         estado: formData.estado,
         respuesta: formData.respuesta?.trim() || ''
       };
-
       if (modalMode === 'create') {
         await createPqrs(dataToSend);
         alert('PQRS creada exitosamente');
@@ -82,7 +72,6 @@ const PqrsAdmin = () => {
         await updatePqrs(selectedPqrs.id_pqrs, dataToSend);
         alert('PQRS actualizada exitosamente');
       }
-      
       await fetchPqrs();
       closeModal();
     } catch (err) {
@@ -95,10 +84,7 @@ const PqrsAdmin = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('¿Estás seguro de eliminar esta PQRS?')) {
-      return;
-    }
-
+    if (!window.confirm('¿Estás seguro de eliminar esta PQRS?')) return;
     try {
       setLoading(true);
       await deletePqrs(id);
@@ -114,14 +100,7 @@ const PqrsAdmin = () => {
 
   const openCreateModal = () => {
     setModalMode('create');
-    setFormData({
-      nombre: '',
-      correo: '',
-      tipo: '',
-      mensaje: '',
-      estado: 'Pendiente',
-      respuesta: ''
-    });
+    setFormData({ nombre: '', correo: '', tipo: '', mensaje: '', estado: 'Pendiente', respuesta: '' });
     setShowModal(true);
   };
 
@@ -155,17 +134,14 @@ const PqrsAdmin = () => {
     navigate("/login");
   };
 
-  // Filtros
   const filteredPqrs = pqrsList.filter(pqrs => {
     const matchSearch = (pqrs.nombre?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                        pqrs.correo?.toLowerCase().includes(searchTerm.toLowerCase()));
+      pqrs.correo?.toLowerCase().includes(searchTerm.toLowerCase()));
     const matchTipo = filterTipo === '' || pqrs.tipo === filterTipo;
     const matchEstado = filterEstado === '' || pqrs.estado === filterEstado;
-    
     return matchSearch && matchTipo && matchEstado;
   });
 
-  // Estadísticas
   const stats = {
     total: pqrsList.length,
     pendientes: pqrsList.filter(p => p.estado === 'Pendiente').length,
@@ -184,11 +160,7 @@ const PqrsAdmin = () => {
   };
 
   const getTipoIcon = (tipo) => {
-    const icons = {
-      'Queja': '🔴',
-      'Reclamo': '⚠️',
-      'Sugerencia': '💡'
-    };
+    const icons = { 'Queja': '🔴', 'Reclamo': '⚠️', 'Sugerencia': '💡' };
     return icons[tipo] || '📝';
   };
 
@@ -200,17 +172,19 @@ const PqrsAdmin = () => {
           <div className="row align-items-center">
             <div className="col-md-3">
               <button className="btn btn-outline-light btn-lg" onClick={() => navigate('/admin')}>
+                {/* ✅ FIX: texto pegado al </i> */}
                 <i className="bi bi-arrow-left me-2"></i>Volver
               </button>
             </div>
             <div className="col-md-6 text-center">
               <h1 className="mb-0 display-6 fw-bold">
-                <i className="bi bi-chat-dots-fill me-3"></i>
-                Gestión de PQRS
+                {/* ✅ FIX: texto pegado al </i> */}
+                <i className="bi bi-chat-dots-fill me-3"></i>Gestión de PQRS
               </h1>
             </div>
             <div className="col-md-3 text-end">
               <button className="btn btn-success btn-lg me-2" onClick={openCreateModal}>
+                {/* ✅ FIX: texto pegado al </i> */}
                 <i className="bi bi-plus-circle me-2"></i>Nueva
               </button>
               <button className="btn btn-danger btn-lg" onClick={handleLogout}>
@@ -222,7 +196,6 @@ const PqrsAdmin = () => {
       </div>
 
       <div className="container-fluid px-4">
-        {/* Error Alert */}
         {error && (
           <div className="alert alert-danger alert-dismissible fade show shadow" role="alert">
             <i className="bi bi-exclamation-triangle-fill me-2"></i>
@@ -231,49 +204,38 @@ const PqrsAdmin = () => {
           </div>
         )}
 
-        {/* Estadísticas Cards */}
+        {/* Estadísticas */}
         <div className="row g-4 mb-4">
           <div className="col-xl-3 col-md-6">
             <div className="stat-card stat-card-primary">
-              <div className="stat-icon">
-                <i className="bi bi-collection-fill"></i>
-              </div>
+              <div className="stat-icon"><i className="bi bi-collection-fill"></i></div>
               <div className="stat-content">
                 <h3 className="stat-number">{stats.total}</h3>
                 <p className="stat-label">Total PQRS</p>
               </div>
             </div>
           </div>
-          
           <div className="col-xl-3 col-md-6">
             <div className="stat-card stat-card-warning">
-              <div className="stat-icon">
-                <i className="bi bi-clock-history"></i>
-              </div>
+              <div className="stat-icon"><i className="bi bi-clock-history"></i></div>
               <div className="stat-content">
                 <h3 className="stat-number">{stats.pendientes}</h3>
                 <p className="stat-label">Pendientes</p>
               </div>
             </div>
           </div>
-          
           <div className="col-xl-3 col-md-6">
             <div className="stat-card stat-card-info">
-              <div className="stat-icon">
-                <i className="bi bi-arrow-repeat"></i>
-              </div>
+              <div className="stat-icon"><i className="bi bi-arrow-repeat"></i></div>
               <div className="stat-content">
                 <h3 className="stat-number">{stats.proceso}</h3>
                 <p className="stat-label">En Proceso</p>
               </div>
             </div>
           </div>
-          
           <div className="col-xl-3 col-md-6">
             <div className="stat-card stat-card-success">
-              <div className="stat-icon">
-                <i className="bi bi-check-circle-fill"></i>
-              </div>
+              <div className="stat-icon"><i className="bi bi-check-circle-fill"></i></div>
               <div className="stat-content">
                 <h3 className="stat-number">{stats.resueltos}</h3>
                 <p className="stat-label">Resueltos</p>
@@ -301,11 +263,7 @@ const PqrsAdmin = () => {
                 </div>
               </div>
               <div className="col-md-4">
-                <select
-                  className="form-select form-select-lg border-0 bg-light"
-                  value={filterTipo}
-                  onChange={(e) => setFilterTipo(e.target.value)}
-                >
+                <select className="form-select form-select-lg border-0 bg-light" value={filterTipo} onChange={(e) => setFilterTipo(e.target.value)}>
                   <option value="">📋 Todos los tipos</option>
                   <option value="Queja">🔴 Queja</option>
                   <option value="Reclamo">⚠️ Reclamo</option>
@@ -313,11 +271,7 @@ const PqrsAdmin = () => {
                 </select>
               </div>
               <div className="col-md-4">
-                <select
-                  className="form-select form-select-lg border-0 bg-light"
-                  value={filterEstado}
-                  onChange={(e) => setFilterEstado(e.target.value)}
-                >
+                <select className="form-select form-select-lg border-0 bg-light" value={filterEstado} onChange={(e) => setFilterEstado(e.target.value)}>
                   <option value="">📊 Todos los estados</option>
                   <option value="Pendiente">⏳ Pendiente</option>
                   <option value="En Proceso">🔄 En Proceso</option>
@@ -333,8 +287,7 @@ const PqrsAdmin = () => {
         <div className="card shadow border-0">
           <div className="card-header bg-dark text-white py-3">
             <h5 className="mb-0 fw-bold">
-              <i className="bi bi-table me-2"></i>
-              Lista de PQRS ({filteredPqrs.length})
+              <i className="bi bi-table me-2"></i>Lista de PQRS ({filteredPqrs.length})
             </h5>
           </div>
           <div className="card-body p-0">
@@ -379,36 +332,20 @@ const PqrsAdmin = () => {
                           </span>
                         </td>
                         <td>
-                          <span className={`badge ${getEstadoBadge(pqrs.estado)}`}>
-                            {pqrs.estado}
-                          </span>
+                          <span className={`badge ${getEstadoBadge(pqrs.estado)}`}>{pqrs.estado}</span>
                         </td>
                         <td style={{ maxWidth: '300px' }}>
-                          <small className="text-muted">
-                            {pqrs.descripcion?.substring(0, 50)}...
-                          </small>
+                          <small className="text-muted">{pqrs.descripcion?.substring(0, 50)}...</small>
                         </td>
                         <td>
                           <div className="btn-group btn-group-sm">
-                            <button
-                              className="btn btn-info"
-                              onClick={() => openViewModal(pqrs)}
-                              title="Ver detalles"
-                            >
+                            <button className="btn btn-info" onClick={() => openViewModal(pqrs)} title="Ver detalles">
                               <i className="bi bi-eye-fill"></i>
                             </button>
-                            <button
-                              className="btn btn-warning"
-                              onClick={() => openEditModal(pqrs)}
-                              title="Editar"
-                            >
+                            <button className="btn btn-warning" onClick={() => openEditModal(pqrs)} title="Editar">
                               <i className="bi bi-pencil-fill"></i>
                             </button>
-                            <button
-                              className="btn btn-danger"
-                              onClick={() => handleDelete(pqrs.id_pqrs)}
-                              title="Eliminar"
-                            >
+                            <button className="btn btn-danger" onClick={() => handleDelete(pqrs.id_pqrs)} title="Eliminar">
                               <i className="bi bi-trash-fill"></i>
                             </button>
                           </div>
@@ -430,6 +367,7 @@ const PqrsAdmin = () => {
             <div className="modal-content border-0 shadow-lg">
               <div className="modal-header bg-gradient-primary text-white">
                 <h5 className="modal-title fw-bold">
+                  {/* ✅ FIX: texto pegado al </i> */}
                   <i className={`bi bi-${modalMode === 'create' ? 'plus-circle' : 'pencil-square'} me-2`}></i>
                   {modalMode === 'create' ? 'Nueva PQRS' : 'Editar PQRS'}
                 </h5>
@@ -439,10 +377,12 @@ const PqrsAdmin = () => {
                 <div className="modal-body p-4">
                   <div className="row g-3">
                     <div className="col-md-6">
-                      <label className="form-label fw-bold">
+                      {/* ✅ FIX: htmlFor + id en input */}
+                      <label htmlFor="nombre" className="form-label fw-bold">
                         <i className="bi bi-person-fill me-2 text-primary"></i>Nombre
                       </label>
                       <input
+                        id="nombre"
                         type="text"
                         name="nombre"
                         className="form-control form-control-lg"
@@ -453,10 +393,12 @@ const PqrsAdmin = () => {
                       />
                     </div>
                     <div className="col-md-6">
-                      <label className="form-label fw-bold">
+                      {/* ✅ FIX: htmlFor + id en input */}
+                      <label htmlFor="correo" className="form-label fw-bold">
                         <i className="bi bi-envelope-fill me-2 text-primary"></i>Correo
                       </label>
                       <input
+                        id="correo"
                         type="email"
                         name="correo"
                         className="form-control form-control-lg"
@@ -467,10 +409,12 @@ const PqrsAdmin = () => {
                       />
                     </div>
                     <div className="col-md-6">
-                      <label className="form-label fw-bold">
+                      {/* ✅ FIX: htmlFor + id en select */}
+                      <label htmlFor="tipo" className="form-label fw-bold">
                         <i className="bi bi-tags-fill me-2 text-primary"></i>Tipo
                       </label>
                       <select
+                        id="tipo"
                         name="tipo"
                         className="form-select form-select-lg"
                         value={formData.tipo}
@@ -484,10 +428,12 @@ const PqrsAdmin = () => {
                       </select>
                     </div>
                     <div className="col-md-6">
-                      <label className="form-label fw-bold">
+                      {/* ✅ FIX: htmlFor + id en select */}
+                      <label htmlFor="estado" className="form-label fw-bold">
                         <i className="bi bi-speedometer2 me-2 text-primary"></i>Estado
                       </label>
                       <select
+                        id="estado"
                         name="estado"
                         className="form-select form-select-lg"
                         value={formData.estado}
@@ -501,10 +447,12 @@ const PqrsAdmin = () => {
                       </select>
                     </div>
                     <div className="col-12">
-                      <label className="form-label fw-bold">
+                      {/* ✅ FIX: htmlFor + id en textarea */}
+                      <label htmlFor="mensaje" className="form-label fw-bold">
                         <i className="bi bi-chat-text-fill me-2 text-primary"></i>Mensaje
                       </label>
                       <textarea
+                        id="mensaje"
                         name="mensaje"
                         className="form-control form-control-lg"
                         value={formData.mensaje}
@@ -515,10 +463,12 @@ const PqrsAdmin = () => {
                       ></textarea>
                     </div>
                     <div className="col-12">
-                      <label className="form-label fw-bold">
+                      {/* ✅ FIX: htmlFor + id en textarea */}
+                      <label htmlFor="respuesta" className="form-label fw-bold">
                         <i className="bi bi-reply-fill me-2 text-success"></i>Respuesta (Opcional)
                       </label>
                       <textarea
+                        id="respuesta"
                         name="respuesta"
                         className="form-control form-control-lg"
                         value={formData.respuesta}
@@ -531,13 +481,14 @@ const PqrsAdmin = () => {
                 </div>
                 <div className="modal-footer bg-light">
                   <button type="button" className="btn btn-secondary btn-lg" onClick={closeModal}>
+                    {/* ✅ FIX: texto pegado al </i> */}
                     <i className="bi bi-x-circle me-2"></i>Cancelar
                   </button>
                   <button type="submit" className="btn btn-primary btn-lg" disabled={loading}>
                     {loading ? (
                       <>
-                        <span className="spinner-border spinner-border-sm me-2"></span>
-                        Procesando...
+                        {/* ✅ FIX: texto pegado al </span> */}
+                        <span className="spinner-border spinner-border-sm me-2"></span>Procesando...
                       </>
                     ) : (
                       <>
@@ -560,8 +511,7 @@ const PqrsAdmin = () => {
             <div className="modal-content border-0 shadow-lg">
               <div className="modal-header bg-gradient-info text-white">
                 <h5 className="modal-title fw-bold">
-                  <i className="bi bi-file-text-fill me-2"></i>
-                  Detalles de PQRS #{selectedPqrs.id_pqrs}
+                  <i className="bi bi-file-text-fill me-2"></i>Detalles de PQRS #{selectedPqrs.id_pqrs}
                 </h5>
                 <button type="button" className="btn-close btn-close-white" onClick={closeModal}></button>
               </div>
@@ -569,25 +519,20 @@ const PqrsAdmin = () => {
                 <div className="row g-4">
                   <div className="col-md-6">
                     <div className="detail-box">
-                      <label className="detail-label">
-                        <i className="bi bi-person-fill me-2"></i>Nombre
-                      </label>
+                      {/* ✅ FIX: labels del modal de vista — son display, no form controls, se usa <p> */}
+                      <p className="detail-label"><i className="bi bi-person-fill me-2"></i>Nombre</p>
                       <p className="detail-value">{selectedPqrs.nombre}</p>
                     </div>
                   </div>
                   <div className="col-md-6">
                     <div className="detail-box">
-                      <label className="detail-label">
-                        <i className="bi bi-envelope-fill me-2"></i>Correo
-                      </label>
+                      <p className="detail-label"><i className="bi bi-envelope-fill me-2"></i>Correo</p>
                       <p className="detail-value">{selectedPqrs.correo}</p>
                     </div>
                   </div>
                   <div className="col-md-4">
                     <div className="detail-box">
-                      <label className="detail-label">
-                        <i className="bi bi-calendar-fill me-2"></i>Fecha
-                      </label>
+                      <p className="detail-label"><i className="bi bi-calendar-fill me-2"></i>Fecha</p>
                       <p className="detail-value">
                         {new Date(selectedPqrs.fecha_solicitud).toLocaleString('es-CO')}
                       </p>
@@ -595,9 +540,7 @@ const PqrsAdmin = () => {
                   </div>
                   <div className="col-md-4">
                     <div className="detail-box">
-                      <label className="detail-label">
-                        <i className="bi bi-tags-fill me-2"></i>Tipo
-                      </label>
+                      <p className="detail-label"><i className="bi bi-tags-fill me-2"></i>Tipo</p>
                       <p className="detail-value">
                         <span className="badge bg-light text-dark border fs-6">
                           {getTipoIcon(selectedPqrs.tipo)} {selectedPqrs.tipo}
@@ -607,9 +550,7 @@ const PqrsAdmin = () => {
                   </div>
                   <div className="col-md-4">
                     <div className="detail-box">
-                      <label className="detail-label">
-                        <i className="bi bi-speedometer2 me-2"></i>Estado
-                      </label>
+                      <p className="detail-label"><i className="bi bi-speedometer2 me-2"></i>Estado</p>
                       <p className="detail-value">
                         <span className={`badge ${getEstadoBadge(selectedPqrs.estado)} fs-6`}>
                           {selectedPqrs.estado}
@@ -619,23 +560,17 @@ const PqrsAdmin = () => {
                   </div>
                   <div className="col-12">
                     <div className="detail-box">
-                      <label className="detail-label">
-                        <i className="bi bi-chat-text-fill me-2"></i>Mensaje
-                      </label>
-                      <div className="alert alert-light border">
-                        {selectedPqrs.descripcion}
-                      </div>
+                      <p className="detail-label"><i className="bi bi-chat-text-fill me-2"></i>Mensaje</p>
+                      <div className="alert alert-light border">{selectedPqrs.descripcion}</div>
                     </div>
                   </div>
                   {selectedPqrs.respuesta && (
                     <div className="col-12">
                       <div className="detail-box">
-                        <label className="detail-label text-success">
+                        <p className="detail-label text-success">
                           <i className="bi bi-reply-fill me-2"></i>Respuesta del administrador
-                        </label>
-                        <div className="alert alert-success border-success">
-                          {selectedPqrs.respuesta}
-                        </div>
+                        </p>
+                        <div className="alert alert-success border-success">{selectedPqrs.respuesta}</div>
                       </div>
                     </div>
                   )}
@@ -645,10 +580,7 @@ const PqrsAdmin = () => {
                 <button className="btn btn-secondary btn-lg" onClick={closeModal}>
                   <i className="bi bi-x-circle me-2"></i>Cerrar
                 </button>
-                <button className="btn btn-primary btn-lg" onClick={() => {
-                  closeModal();
-                  openEditModal(selectedPqrs);
-                }}>
+                <button className="btn btn-primary btn-lg" onClick={() => { closeModal(); openEditModal(selectedPqrs); }}>
                   <i className="bi bi-pencil-fill me-2"></i>Editar
                 </button>
               </div>
