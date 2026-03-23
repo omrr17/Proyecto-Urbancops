@@ -6,17 +6,17 @@ const Pedido = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
-  
+
   const [idUsuario, setIdUsuario] = useState('');
   const [estado, setEstado] = useState('Pendiente');
   const [total, setTotal] = useState('');
   const [fechaEntrega, setFechaEntrega] = useState('');
-  
+
   const [editingId, setEditingId] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deletingId, setDeletingId] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
-  
+
   // Paginación
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
@@ -50,12 +50,12 @@ const Pedido = () => {
 
   const handleCreateOrUpdate = async (e) => {
     e.preventDefault();
-    
+
     if (!localStorage.getItem("token")) {
       setError("⚠️ Debes iniciar sesión");
       return;
     }
-    
+
     if (!idUsuario || !estado || !total) {
       setError("Los campos ID Usuario, Estado y Total son obligatorios");
       return;
@@ -64,11 +64,11 @@ const Pedido = () => {
     try {
       setLoading(true);
       setError(null);
-      
+
       const pedidoData = {
-        id_usuario: parseInt(idUsuario),
+        id_usuario: Number.parseInt(idUsuario),
         estado: estado,
-        total: parseFloat(total),
+        total: Number.parseFloat(total),
         fecha_entrega: fechaEntrega || null,
         fecha_pedido: new Date().toISOString().split("T")[0]
       };
@@ -80,7 +80,7 @@ const Pedido = () => {
         await createPedido(pedidoData);
         setSuccess("¡Pedido creado exitosamente!");
       }
-      
+
       await fetchPedidos();
       resetForm();
       setTimeout(() => setSuccess(false), 3000);
@@ -168,10 +168,10 @@ const Pedido = () => {
   const formatDate = (dateString) => {
     if (!dateString) return 'Sin definir';
     const date = new Date(dateString);
-    return date.toLocaleDateString('es-CO', { 
-      year: 'numeric', 
-      month: 'short', 
-      day: 'numeric' 
+    return date.toLocaleDateString('es-CO', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
     });
   };
 
@@ -198,7 +198,7 @@ const Pedido = () => {
   };
 
   const token = localStorage.getItem("token");
-  
+
   if (!token) {
     return (
       <div style={{
@@ -233,7 +233,7 @@ const Pedido = () => {
           }}>
             Debes iniciar sesión para acceder a la gestión de pedidos.
           </p>
-          <button 
+          <button
             onClick={() => window.location.href = "/login"}
             style={{
               width: "100%",
@@ -292,7 +292,7 @@ const Pedido = () => {
               Administra y registra todos tus pedidos
             </p>
           </div>
-          <button 
+          <button
             onClick={handleLogout}
             style={{
               padding: "12px 24px",
@@ -361,7 +361,7 @@ const Pedido = () => {
           }}>
             📋 Pedidos Registrados
           </h2>
-          
+
           {loading ? (
             <div style={{ textAlign: "center", padding: "60px 20px", color: "#64748b" }}>
               <div style={{ fontSize: "48px", marginBottom: "16px" }}>⏳</div>
@@ -371,232 +371,231 @@ const Pedido = () => {
             <>
               <div style={{ display: "grid", gap: "16px", marginBottom: "24px" }}>
                 {currentPedidos.map((pedido) => (
-                <div 
-                  key={pedido.id_pedido}
-                  style={{
-                    background: "#334155",
-                    borderRadius: "12px",
-                    padding: "20px",
-                    borderLeft: `4px solid ${getEstadoColor(pedido.estado)}`
-                  }}
-                >
-                  <div style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    marginBottom: "16px",
-                    flexWrap: "wrap",
-                    gap: "12px"
-                  }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                      <span style={{ fontSize: "24px" }}>{getEstadoIcon(pedido.estado)}</span>
-                      <div>
-                        <h3 style={{
-                          margin: "0 0 4px 0",
-                          fontSize: "18px",
-                          fontWeight: "600",
-                          color: "#f1f5f9"
+                  <div
+                    key={pedido.id_pedido}
+                    style={{
+                      background: "#334155",
+                      borderRadius: "12px",
+                      padding: "20px",
+                      borderLeft: `4px solid ${getEstadoColor(pedido.estado)}`
+                    }}
+                  >
+                    <div style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      marginBottom: "16px",
+                      flexWrap: "wrap",
+                      gap: "12px"
+                    }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                        <span style={{ fontSize: "24px" }}>{getEstadoIcon(pedido.estado)}</span>
+                        <div>
+                          <h3 style={{
+                            margin: "0 0 4px 0",
+                            fontSize: "18px",
+                            fontWeight: "600",
+                            color: "#f1f5f9"
+                          }}>
+                            Pedido #{pedido.id_pedido}
+                          </h3>
+                          <p style={{ margin: 0, fontSize: "14px", color: "#94a3b8" }}>
+                            Usuario #{pedido.id_usuario}
+                          </p>
+                        </div>
+                      </div>
+                      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                        <div style={{
+                          background: getEstadoColor(pedido.estado),
+                          color: "#fff",
+                          padding: "6px 16px",
+                          borderRadius: "20px",
+                          fontSize: "13px",
+                          fontWeight: "600"
                         }}>
-                          Pedido #{pedido.id_pedido}
-                        </h3>
-                        <p style={{ margin: 0, fontSize: "14px", color: "#94a3b8" }}>
-                          Usuario #{pedido.id_usuario}
+                          {pedido.estado}
+                        </div>
+                        <button
+                          onClick={() => handleEdit(pedido)}
+                          style={{
+                            padding: "8px 16px",
+                            background: "#3b82f6",
+                            color: "#fff",
+                            border: "none",
+                            borderRadius: "6px",
+                            fontSize: "13px",
+                            fontWeight: "600",
+                            cursor: "pointer"
+                          }}
+                        >
+                          ✏️ Editar
+                        </button>
+                        <button
+                          onClick={() => openDeleteModal(pedido.id_pedido)}
+                          style={{
+                            padding: "8px 16px",
+                            background: "#ef4444",
+                            color: "#fff",
+                            border: "none",
+                            borderRadius: "6px",
+                            fontSize: "13px",
+                            fontWeight: "600",
+                            cursor: "pointer"
+                          }}
+                        >
+                          🗑️ Eliminar
+                        </button>
+                      </div>
+                    </div>
+
+                    <div style={{
+                      display: "grid",
+                      gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+                      gap: "16px",
+                      padding: "16px",
+                      background: "#1e293b",
+                      borderRadius: "8px"
+                    }}>
+                      <div>
+                        <p style={{
+                          margin: "0 0 4px 0",
+                          fontSize: "12px",
+                          color: "#94a3b8",
+                          fontWeight: "600"
+                        }}>TOTAL</p>
+                        <p style={{
+                          margin: 0,
+                          fontSize: "20px",
+                          fontWeight: "700",
+                          color: "#10b981"
+                        }}>
+                          {formatCurrency(pedido.total)}
+                        </p>
+                      </div>
+                      <div>
+                        <p style={{
+                          margin: "0 0 4px 0",
+                          fontSize: "12px",
+                          color: "#94a3b8",
+                          fontWeight: "600"
+                        }}>FECHA PEDIDO</p>
+                        <p style={{
+                          margin: 0,
+                          fontSize: "14px",
+                          color: "#f1f5f9",
+                          fontWeight: "500"
+                        }}>
+                          📅 {formatDate(pedido.fecha_pedido)}
+                        </p>
+                      </div>
+                      <div>
+                        <p style={{
+                          margin: "0 0 4px 0",
+                          fontSize: "12px",
+                          color: "#94a3b8",
+                          fontWeight: "600"
+                        }}>FECHA ENTREGA</p>
+                        <p style={{
+                          margin: 0,
+                          fontSize: "14px",
+                          color: "#f1f5f9",
+                          fontWeight: "500"
+                        }}>
+                          🚚 {formatDate(pedido.fecha_entrega)}
                         </p>
                       </div>
                     </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                      <div style={{
-                        background: getEstadoColor(pedido.estado),
-                        color: "#fff",
-                        padding: "6px 16px",
-                        borderRadius: "20px",
-                        fontSize: "13px",
-                        fontWeight: "600"
-                      }}>
-                        {pedido.estado}
-                      </div>
-                      <button
-                        onClick={() => handleEdit(pedido)}
-                        style={{
-                          padding: "8px 16px",
-                          background: "#3b82f6",
-                          color: "#fff",
-                          border: "none",
-                          borderRadius: "6px",
-                          fontSize: "13px",
-                          fontWeight: "600",
-                          cursor: "pointer"
-                        }}
-                      >
-                        ✏️ Editar
-                      </button>
-                      <button
-                        onClick={() => openDeleteModal(pedido.id_pedido)}
-                        style={{
-                          padding: "8px 16px",
-                          background: "#ef4444",
-                          color: "#fff",
-                          border: "none",
-                          borderRadius: "6px",
-                          fontSize: "13px",
-                          fontWeight: "600",
-                          cursor: "pointer"
-                        }}
-                      >
-                        🗑️ Eliminar
-                      </button>
-                    </div>
                   </div>
-                  
-                  <div style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-                    gap: "16px",
-                    padding: "16px",
-                    background: "#1e293b",
-                    borderRadius: "8px"
-                  }}>
-                    <div>
-                      <p style={{
-                        margin: "0 0 4px 0",
-                        fontSize: "12px",
-                        color: "#94a3b8",
-                        fontWeight: "600"
-                      }}>TOTAL</p>
-                      <p style={{
-                        margin: 0,
-                        fontSize: "20px",
-                        fontWeight: "700",
-                        color: "#10b981"
-                      }}>
-                        {formatCurrency(pedido.total)}
-                      </p>
-                    </div>
-                    <div>
-                      <p style={{
-                        margin: "0 0 4px 0",
-                        fontSize: "12px",
-                        color: "#94a3b8",
-                        fontWeight: "600"
-                      }}>FECHA PEDIDO</p>
-                      <p style={{
-                        margin: 0,
-                        fontSize: "14px",
-                        color: "#f1f5f9",
-                        fontWeight: "500"
-                      }}>
-                        📅 {formatDate(pedido.fecha_pedido)}
-                      </p>
-                    </div>
-                    <div>
-                      <p style={{
-                        margin: "0 0 4px 0",
-                        fontSize: "12px",
-                        color: "#94a3b8",
-                        fontWeight: "600"
-                      }}>FECHA ENTREGA</p>
-                      <p style={{
-                        margin: 0,
-                        fontSize: "14px",
-                        color: "#f1f5f9",
-                        fontWeight: "500"
-                      }}>
-                        🚚 {formatDate(pedido.fecha_entrega)}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Paginación */}
-            {totalPages > 1 && (
-              <div style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "12px",
-                marginTop: "24px",
-                paddingTop: "24px",
-                borderTop: "1px solid #334155"
-              }}>
-                <button
-                  onClick={prevPage}
-                  disabled={currentPage === 1}
-                  style={{
-                    padding: "10px 16px",
-                    background: currentPage === 1 ? "#475569" : "#64748b",
-                    color: "#fff",
-                    border: "none",
-                    borderRadius: "8px",
-                    fontSize: "14px",
-                    fontWeight: "600",
-                    cursor: currentPage === 1 ? "not-allowed" : "pointer",
-                    transition: "all 0.2s"
-                  }}
-                >
-                  ← Anterior
-                </button>
-
-                <div style={{ display: "flex", gap: "8px" }}>
-                  {[...Array(totalPages)].map((_, index) => {
-                    const pageNumber = index + 1;
-                    // Mostrar solo algunas páginas para no saturar
-                    if (
-                      pageNumber === 1 ||
-                      pageNumber === totalPages ||
-                      (pageNumber >= currentPage - 1 && pageNumber <= currentPage + 1)
-                    ) {
-                      return (
-                        <button
-                          key={pageNumber}
-                          onClick={() => goToPage(pageNumber)}
-                          style={{
-                            padding: "10px 14px",
-                            background: currentPage === pageNumber ? "#6366f1" : "#334155",
-                            color: "#fff",
-                            border: "none",
-                            borderRadius: "8px",
-                            fontSize: "14px",
-                            fontWeight: "600",
-                            cursor: "pointer",
-                            transition: "all 0.2s",
-                            minWidth: "40px"
-                          }}
-                        >
-                          {pageNumber}
-                        </button>
-                      );
-                    } else if (
-                      pageNumber === currentPage - 2 ||
-                      pageNumber === currentPage + 2
-                    ) {
-                      return <span key={pageNumber} style={{ color: "#64748b", padding: "10px 4px" }}>...</span>;
-                    }
-                    return null;
-                  })}
-                </div>
-
-                <button
-                  onClick={nextPage}
-                  disabled={currentPage === totalPages}
-                  style={{
-                    padding: "10px 16px",
-                    background: currentPage === totalPages ? "#475569" : "#64748b",
-                    color: "#fff",
-                    border: "none",
-                    borderRadius: "8px",
-                    fontSize: "14px",
-                    fontWeight: "600",
-                    cursor: currentPage === totalPages ? "not-allowed" : "pointer",
-                    transition: "all 0.2s"
-                  }}
-                >
-                  Siguiente →
-                </button>
+                ))}
               </div>
-            )}
-          </>
+
+              {/* Paginación */}
+              {totalPages > 1 && (
+                <div style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "12px",
+                  marginTop: "24px",
+                  paddingTop: "24px",
+                  borderTop: "1px solid #334155"
+                }}>
+                  <button
+                    onClick={prevPage}
+                    disabled={currentPage === 1}
+                    style={{
+                      padding: "10px 16px",
+                      background: currentPage === 1 ? "#475569" : "#64748b",
+                      color: "#fff",
+                      border: "none",
+                      borderRadius: "8px",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                      cursor: currentPage === 1 ? "not-allowed" : "pointer",
+                      transition: "all 0.2s"
+                    }}
+                  >
+                    ← Anterior
+                  </button>
+
+                  — new Array() en lugar de Array()
+                  <div style={{ display: "flex", gap: "8px" }}>
+                    {[...new Array(totalPages)].map((_, index) => {
+                      const pageNumber = index + 1;
+                      if (
+                        pageNumber === 1 ||
+                        pageNumber === totalPages ||
+                        (pageNumber >= currentPage - 1 && pageNumber <= currentPage + 1)
+                      ) {
+                        return (
+                          <button
+                            key={pageNumber}
+                            onClick={() => goToPage(pageNumber)}
+                            style={{
+                              padding: "10px 14px",
+                              background: currentPage === pageNumber ? "#6366f1" : "#334155",
+                              color: "#fff",
+                              border: "none",
+                              borderRadius: "8px",
+                              fontSize: "14px",
+                              fontWeight: "600",
+                              cursor: "pointer",
+                              transition: "all 0.2s",
+                              minWidth: "40px"
+                            }}
+                          >
+                            {pageNumber}
+                          </button>
+                        );
+                      } else if (
+                        pageNumber === currentPage - 2 ||
+                        pageNumber === currentPage + 2
+                      ) {
+                        return <span key={pageNumber} style={{ color: "#64748b", padding: "10px 4px" }}>...</span>;
+                      }
+                      return null;
+                    })}
+                  </div>
+                  <button
+                    onClick={nextPage}
+                    disabled={currentPage === totalPages}
+                    style={{
+                      padding: "10px 16px",
+                      background: currentPage === totalPages ? "#475569" : "#64748b",
+                      color: "#fff",
+                      border: "none",
+                      borderRadius: "8px",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                      cursor: currentPage === totalPages ? "not-allowed" : "pointer",
+                      transition: "all 0.2s"
+                    }}
+                  >
+                    Siguiente →
+                  </button>
+                </div>
+              )}
+            </>
           ) : (
             <div style={{ textAlign: "center", padding: "60px 20px", color: "#64748b" }}>
               <div style={{ fontSize: "48px", marginBottom: "16px" }}>📭</div>
@@ -644,64 +643,51 @@ const Pedido = () => {
               </button>
             )}
           </div>
-          
+
           <div style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
             gap: "20px",
             marginBottom: "20px"
           }}>
+            
             <div>
-              <label style={{
-                display: "block",
-                marginBottom: "8px",
-                fontSize: "14px",
-                fontWeight: "600",
-                color: "#cbd5e1"
+              <label htmlFor="id_usuario" style={{
+                display: "block", marginBottom: "8px",
+                fontSize: "14px", fontWeight: "600", color: "#cbd5e1"
               }}>ID Usuario *</label>
               <input
+                id="id_usuario"
                 type="number"
                 value={idUsuario}
                 onChange={(e) => setIdUsuario(e.target.value)}
                 placeholder="Ej: 1001"
                 disabled={loading}
                 style={{
-                  width: "100%",
-                  padding: "12px 16px",
-                  border: "2px solid #334155",
-                  borderRadius: "8px",
-                  fontSize: "14px",
-                  color: "#f1f5f9",
-                  background: "#0f172a",
-                  outline: "none",
-                  boxSizing: "border-box"
+                  width: "100%", padding: "12px 16px",
+                  border: "2px solid #334155", borderRadius: "8px",
+                  fontSize: "14px", color: "#f1f5f9",
+                  background: "#0f172a", outline: "none", boxSizing: "border-box"
                 }}
               />
             </div>
 
             <div>
-              <label style={{
-                display: "block",
-                marginBottom: "8px",
-                fontSize: "14px",
-                fontWeight: "600",
-                color: "#cbd5e1"
+              <label htmlFor="estado" style={{
+                display: "block", marginBottom: "8px",
+                fontSize: "14px", fontWeight: "600", color: "#cbd5e1"
               }}>Estado *</label>
               <select
+                id="estado"
                 value={estado}
                 onChange={(e) => setEstado(e.target.value)}
                 disabled={loading}
                 style={{
-                  width: "100%",
-                  padding: "12px 16px",
-                  border: "2px solid #334155",
-                  borderRadius: "8px",
-                  fontSize: "14px",
-                  color: "#f1f5f9",
-                  background: "#0f172a",
-                  outline: "none",
-                  boxSizing: "border-box",
-                  cursor: "pointer"
+                  width: "100%", padding: "12px 16px",
+                  border: "2px solid #334155", borderRadius: "8px",
+                  fontSize: "14px", color: "#f1f5f9",
+                  background: "#0f172a", outline: "none",
+                  boxSizing: "border-box", cursor: "pointer"
                 }}
               >
                 <option value="Pendiente">⏳ Pendiente</option>
@@ -712,14 +698,12 @@ const Pedido = () => {
             </div>
 
             <div>
-              <label style={{
-                display: "block",
-                marginBottom: "8px",
-                fontSize: "14px",
-                fontWeight: "600",
-                color: "#cbd5e1"
+              <label htmlFor="total" style={{
+                display: "block", marginBottom: "8px",
+                fontSize: "14px", fontWeight: "600", color: "#cbd5e1"
               }}>Total *</label>
               <input
+                id="total"
                 type="number"
                 step="0.01"
                 min="0"
@@ -728,28 +712,21 @@ const Pedido = () => {
                 placeholder="0.00"
                 disabled={loading}
                 style={{
-                  width: "100%",
-                  padding: "12px 16px",
-                  border: "2px solid #334155",
-                  borderRadius: "8px",
-                  fontSize: "14px",
-                  color: "#f1f5f9",
-                  background: "#0f172a",
-                  outline: "none",
-                  boxSizing: "border-box"
+                  width: "100%", padding: "12px 16px",
+                  border: "2px solid #334155", borderRadius: "8px",
+                  fontSize: "14px", color: "#f1f5f9",
+                  background: "#0f172a", outline: "none", boxSizing: "border-box"
                 }}
               />
             </div>
 
             <div>
-              <label style={{
-                display: "block",
-                marginBottom: "8px",
-                fontSize: "14px",
-                fontWeight: "600",
-                color: "#cbd5e1"
+              <label htmlFor="fecha_entrega" style={{
+                display: "block", marginBottom: "8px",
+                fontSize: "14px", fontWeight: "600", color: "#cbd5e1"
               }}>Fecha de Entrega</label>
               <input
+                id="fecha_entrega"
                 type="date"
                 value={fechaEntrega}
                 onChange={(e) => setFechaEntrega(e.target.value)}
@@ -769,7 +746,7 @@ const Pedido = () => {
             </div>
           </div>
 
-          <button 
+          <button
             onClick={handleCreateOrUpdate}
             disabled={loading}
             style={{

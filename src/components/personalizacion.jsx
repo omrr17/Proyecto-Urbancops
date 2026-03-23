@@ -53,10 +53,10 @@ const Personalizacion = () => {
       setError(null);
       
       const data = {
-        id_pedido: idPedido ? parseInt(idPedido) : null,
+        id_pedido: idPedido ? Number.parseInt(idPedido) : null,
         tipo_personalizacion: tipoPersonalizacion,
         descripcion: descripcion.trim(),
-        costo_adicional: costoAdicional ? parseFloat(costoAdicional) : 0
+        costo_adicional: costoAdicional ? Number.parseFloat(costoAdicional) : 0
       };
 
       if (isEditing) {
