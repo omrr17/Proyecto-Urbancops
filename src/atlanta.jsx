@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 
 export default function Braves() {
-  // --- Carrito ---
   const agregarAlCarrito = (nombre, precio, imagen) => {
     const carrito = JSON.parse(localStorage.getItem("carritoUrbanCops")) || [];
     carrito.push({ nombre, precio, imagen });
@@ -37,15 +36,16 @@ export default function Braves() {
           </button>
           <div className="collapse navbar-collapse" id="navbarGorras">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              {/* NBA */}
+
+              {/* NBA — ✅ FIX: <button> en lugar de <a href="#"> */}
               <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle fw-bold"
-                  href="#"
+                <button
+                  className="nav-link dropdown-toggle fw-bold btn btn-link p-0 text-white text-decoration-none"
                   data-bs-toggle="dropdown"
+                  aria-expanded="false"
                 >
                   NBA
-                </a>
+                </button>
                 <ul className="dropdown-menu">
                   <li><a className="dropdown-item" href="/chicago">Chicago Bulls</a></li>
                   <li><a className="dropdown-item" href="/boston">Boston Celtics</a></li>
@@ -53,15 +53,15 @@ export default function Braves() {
                 </ul>
               </li>
 
-              {/* NFL */}
+              {/* NFL — ✅ FIX: <button> en lugar de <a href="#"> */}
               <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle fw-bold"
-                  href="#"
+                <button
+                  className="nav-link dropdown-toggle fw-bold btn btn-link p-0 text-white text-decoration-none"
                   data-bs-toggle="dropdown"
+                  aria-expanded="false"
                 >
                   NFL
-                </a>
+                </button>
                 <ul className="dropdown-menu">
                   <li><a className="dropdown-item" href="/falcon">Atlanta Falcons</a></li>
                   <li><a className="dropdown-item" href="/arizona">Arizona Cardinals</a></li>
@@ -69,15 +69,15 @@ export default function Braves() {
                 </ul>
               </li>
 
-              {/* MLB */}
+              {/* MLB — ✅ FIX: <button> en lugar de <a href="#"> */}
               <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle fw-bold"
-                  href="#"
+                <button
+                  className="nav-link dropdown-toggle fw-bold btn btn-link p-0 text-white text-decoration-none"
                   data-bs-toggle="dropdown"
+                  aria-expanded="false"
                 >
                   MLB
-                </a>
+                </button>
                 <ul className="dropdown-menu">
                   <li><a className="dropdown-item" href="/red">Boston Red Sox</a></li>
                   <li><a className="dropdown-item" href="/white">Chicago White Sox</a></li>
@@ -86,14 +86,10 @@ export default function Braves() {
               </li>
 
               <li className="nav-item">
-                <a className="nav-link fw-bold" href="/personalizacion">
-                  Personalizadas
-                </a>
+                <a className="nav-link fw-bold" href="/personalizacion">Personalizadas</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link fw-bold" href="/pqrs">
-                  PQRS
-                </a>
+                <a className="nav-link fw-bold" href="/pqrs">PQRS</a>
               </li>
             </ul>
 
@@ -114,12 +110,10 @@ export default function Braves() {
               />
             </form>
 
-            {/* Usuario */}
             <a href="/login" className="btn text-white">
               <i className="bi bi-person"></i>
             </a>
 
-            {/* Carrito */}
             <button
               className="btn text-white position-relative"
               onClick={() => (window.location.href = "/carrito")}
@@ -137,35 +131,17 @@ export default function Braves() {
       </nav>
 
       {/* Carousel */}
-      <div
-        id="carouselExampleControls"
-        className="carousel slide"
-        data-bs-ride="carousel"
-      >
+      <div id="carouselExampleControls" className="carousel slide" data-bs-ride="carousel">
         <div className="carousel-inner">
           <div className="carousel-item active">
-            <img
-              src="/img/Braves/Wall.jpg"
-              className="d-block w-100"
-              alt="Atlanta Braves"
-            />
+            <img src="/img/Braves/Wall.jpg" className="d-block w-100" alt="Atlanta Braves" />
           </div>
         </div>
-        <button
-          className="carousel-control-prev"
-          type="button"
-          data-bs-target="#carouselExampleControls"
-          data-bs-slide="prev"
-        >
+        <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
           <span className="carousel-control-prev-icon"></span>
           <span className="visually-hidden">Anterior</span>
         </button>
-        <button
-          className="carousel-control-next"
-          type="button"
-          data-bs-target="#carouselExampleControls"
-          data-bs-slide="next"
-        >
+        <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
           <span className="carousel-control-next-icon"></span>
           <span className="visually-hidden">Siguiente</span>
         </button>
@@ -187,60 +163,15 @@ export default function Braves() {
       <section className="container my-5 text-center">
         <div className="row justify-content-center mt-4">
           {[
-            {
-              nombre: "Atlanta Braves Classic Fit",
-              precio: 95000,
-              imagen: "/img/Braves/1-removebg-preview.png",
-              desc: "Gorra New Era 59FIFTY de la colección NBA Classic.",
-            },
-            {
-              nombre: "Atlanta Braves Heritage Line",
-              precio: 92000,
-              imagen: "/img/Braves/2-removebg-preview.png",
-              desc: "Gorra con logotipo bordado y diseño premium.",
-            },
-            {
-              nombre: "Atlanta Braves Night Game",
-              precio: 98000,
-              imagen: "/img/Braves/3-removebg-preview.png",
-              desc: "Modelo clásico con detalles bordados oficiales.",
-            },
-            {
-              nombre: "Atlanta Braves Retro Swing",
-              precio: 95000,
-              imagen: "/img/Braves/4-removebg-preview.png",
-              desc: "Gorra New Era multi color.",
-            },
-            {
-              nombre: "Atlanta Braves Southern Pride",
-              precio: 92000,
-              imagen: "/img/Braves/5-removebg-preview.png",
-              desc: "Gorra con logotipo bordado y diseño premium.",
-            },
-            {
-              nombre: "Atlanta Braves Bold Edition",
-              precio: 98000,
-              imagen: "/img/Braves/6-removebg-preview.png",
-              desc: "Modelo clásico con detalles bordados oficiales.",
-            },
-            {
-              nombre: "Atlanta Braves Street Style",
-              precio: 95000,
-              imagen: "/img/Braves/7-removebg-preview.png",
-              desc: "Gorra New Era de la colección NBA Classic.",
-            },
-            {
-              nombre: "Atlanta Braves Home Field",
-              precio: 92000,
-              imagen: "/img/Braves/8-removebg-preview.png",
-              desc: "Gorra con logotipo bordado y diseño premium.",
-            },
-            {
-              nombre: "Atlanta Braves Legacy Cap",
-              precio: 98000,
-              imagen: "/img/Braves/9-removebg-preview.png",
-              desc: "Modelo clásico con detalles bordados oficiales.",
-            },
+            { nombre: "Atlanta Braves Classic Fit",    precio: 95000, imagen: "/img/Braves/1-removebg-preview.png", desc: "Gorra New Era 59FIFTY de la colección NBA Classic." },
+            { nombre: "Atlanta Braves Heritage Line",  precio: 92000, imagen: "/img/Braves/2-removebg-preview.png", desc: "Gorra con logotipo bordado y diseño premium." },
+            { nombre: "Atlanta Braves Night Game",     precio: 98000, imagen: "/img/Braves/3-removebg-preview.png", desc: "Modelo clásico con detalles bordados oficiales." },
+            { nombre: "Atlanta Braves Retro Swing",    precio: 95000, imagen: "/img/Braves/4-removebg-preview.png", desc: "Gorra New Era multi color." },
+            { nombre: "Atlanta Braves Southern Pride", precio: 92000, imagen: "/img/Braves/5-removebg-preview.png", desc: "Gorra con logotipo bordado y diseño premium." },
+            { nombre: "Atlanta Braves Bold Edition",   precio: 98000, imagen: "/img/Braves/6-removebg-preview.png", desc: "Modelo clásico con detalles bordados oficiales." },
+            { nombre: "Atlanta Braves Street Style",   precio: 95000, imagen: "/img/Braves/7-removebg-preview.png", desc: "Gorra New Era de la colección NBA Classic." },
+            { nombre: "Atlanta Braves Home Field",     precio: 92000, imagen: "/img/Braves/8-removebg-preview.png", desc: "Gorra con logotipo bordado y diseño premium." },
+            { nombre: "Atlanta Braves Legacy Cap",     precio: 98000, imagen: "/img/Braves/9-removebg-preview.png", desc: "Modelo clásico con detalles bordados oficiales." },
           ].map((p, i) => (
             <div key={i} className="col-md-4 mb-4">
               <div className="p-3 rounded text-dark-bg">
@@ -255,9 +186,7 @@ export default function Braves() {
                 <p className="fw-bold">${p.precio.toLocaleString()} COP</p>
                 <button
                   className="btn btn-primary w-100"
-                  onClick={() =>
-                    agregarAlCarrito(p.nombre, p.precio, p.imagen)
-                  }
+                  onClick={() => agregarAlCarrito(p.nombre, p.precio, p.imagen)}
                 >
                   Agregar al carrito
                 </button>
@@ -273,61 +202,46 @@ export default function Braves() {
           <div className="row">
             <div className="col-md-4 mb-4">
               <h5 className="fw-bold">UrbanCops</h5>
-              <p>
-                Gorras urbanas exclusivas con estilo auténtico. Representa tu
-                equipo, tu barrio y tu esencia.
-              </p>
+              <p>Gorras urbanas exclusivas con estilo auténtico. Representa tu equipo, tu barrio y tu esencia.</p>
+              {/* ✅ FIX: <button> en lugar de <a href="#"> */}
               <div>
-                <a href="#" className="text-white me-3">
+                <button
+                  className="btn text-white me-3 p-0 border-0 bg-transparent"
+                  aria-label="Facebook"
+                  onClick={() => window.open('https://facebook.com', '_blank')}
+                >
                   <i className="bi bi-facebook"></i>
-                </a>
-                <a href="#" className="text-white me-3">
+                </button>
+                <button
+                  className="btn text-white me-3 p-0 border-0 bg-transparent"
+                  aria-label="Instagram"
+                  onClick={() => window.open('https://instagram.com', '_blank')}
+                >
                   <i className="bi bi-instagram"></i>
-                </a>
-                <a href="#" className="text-white">
+                </button>
+                <button
+                  className="btn text-white p-0 border-0 bg-transparent"
+                  aria-label="WhatsApp"
+                  onClick={() => window.open('https://wa.me/573100000000', '_blank')}
+                >
                   <i className="bi bi-whatsapp"></i>
-                </a>
+                </button>
               </div>
             </div>
             <div className="col-md-4 mb-4">
               <h5 className="fw-bold">Enlaces Rápidos</h5>
               <ul className="list-unstyled">
-                <li>
-                  <a href="/" className="text-white text-decoration-none">
-                    Inicio
-                  </a>
-                </li>
-                <li>
-                  <a href="/nba" className="text-white text-decoration-none">
-                    NBA
-                  </a>
-                </li>
-                <li>
-                  <a href="/mlb" className="text-white text-decoration-none">
-                    MLB
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/personalizadas"
-                    className="text-white text-decoration-none"
-                  >
-                    Personalizadas
-                  </a>
-                </li>
+                <li><a href="/" className="text-white text-decoration-none">Inicio</a></li>
+                <li><a href="/nba" className="text-white text-decoration-none">NBA</a></li>
+                <li><a href="/mlb" className="text-white text-decoration-none">MLB</a></li>
+                <li><a href="/personalizadas" className="text-white text-decoration-none">Personalizadas</a></li>
               </ul>
             </div>
             <div className="col-md-4 mb-4">
               <h5 className="fw-bold">Contacto</h5>
-              <p>
-                <i className="bi bi-envelope"></i> contacto@urbancops.com
-              </p>
-              <p>
-                <i className="bi bi-phone"></i> +57 310 000 0000
-              </p>
-              <p>
-                <i className="bi bi-geo-alt"></i> Bogotá, Colombia
-              </p>
+              <p><i className="bi bi-envelope"></i> contacto@urbancops.com</p>
+              <p><i className="bi bi-phone"></i> +57 310 000 0000</p>
+              <p><i className="bi bi-geo-alt"></i> Bogotá, Colombia</p>
             </div>
           </div>
           <hr className="border-gray" />

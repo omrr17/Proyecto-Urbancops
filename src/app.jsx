@@ -75,7 +75,14 @@ function App() {
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               {/* NBA */}
               <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle fw-bold" href="#" data-bs-toggle="dropdown">NBA</a>
+               
+                <button
+                  className="nav-link dropdown-toggle fw-bold btn btn-link p-0 text-white text-decoration-none"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  NBA
+                </button>
                 <ul className="dropdown-menu">
                   <li><a className="dropdown-item" href="/chicago">Chicago Bulls</a></li>
                   <li><a className="dropdown-item" href="/boston">Boston Celtics</a></li>
@@ -85,7 +92,14 @@ function App() {
 
               {/* NFL */}
               <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle fw-bold" href="#" data-bs-toggle="dropdown">NFL</a>
+               
+                <button
+                  className="nav-link dropdown-toggle fw-bold btn btn-link p-0 text-white text-decoration-none"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  NFL
+                </button>
                 <ul className="dropdown-menu">
                   <li><a className="dropdown-item" href="/falcon">Atlanta Falcons</a></li>
                   <li><a className="dropdown-item" href="/arizona">Arizona Cardinals</a></li>
@@ -95,7 +109,13 @@ function App() {
 
               {/* MLB */}
               <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle fw-bold" href="#" data-bs-toggle="dropdown">MLB</a>
+                          <button
+                  className="nav-link dropdown-toggle fw-bold btn btn-link p-0 text-white text-decoration-none"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  MLB
+                </button>
                 <ul className="dropdown-menu">
                   <li><a className="dropdown-item" href="/red">Boston Red Sox</a></li>
                   <li><a className="dropdown-item" href="/white">Chicago White Sox</a></li>
@@ -174,13 +194,13 @@ function App() {
         <div id="carouselExampleControls" className="carousel slide" data-bs-ride="carousel">
           <div className="carousel-inner">
             <div className="carousel-item active">
-              <img src="/img/Containera.webp" className="d-block w-100" alt="Slide 1" style={{height: 500, objectFit: 'cover'}} />
+              <img src="/img/Containera.webp" className="d-block w-100" alt="Slide 1" style={{ height: 500, objectFit: 'cover' }} />
             </div>
             <div className="carousel-item">
-              <img src="/img/containerb.webp" className="d-block w-100" alt="Slide 2" style={{height: 500, objectFit: 'cover'}} />
+              <img src="/img/containerb.webp" className="d-block w-100" alt="Slide 2" style={{ height: 500, objectFit: 'cover' }} />
             </div>
             <div className="carousel-item">
-              <img src="/img/Contanerc.webp" className="d-block w-100" alt="Slide 3" style={{height: 500, objectFit: 'cover'}} />
+              <img src="/img/Contanerc.webp" className="d-block w-100" alt="Slide 3" style={{ height: 500, objectFit: 'cover' }} />
             </div>
           </div>
           <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
@@ -202,7 +222,7 @@ function App() {
           <div className="col-md-4 mb-4">
             <div className="p-3 rounded text-dark-bg">
               <h3>Chicago Bulls</h3>
-              <img src="/img/chicago.png" className="img-fluid my-2" alt="Chicago" style={{height: 100, objectFit: 'cover'}} />
+              <img src="/img/chicago.png" className="img-fluid my-2" alt="Chicago" style={{ height: 100, objectFit: 'cover' }} />
               <p>Gorra New Era 59FIFTY de la colección NBA Classic.</p>
               <p className="fw-bold">$95.000 COP</p>
               <button className="btn btn-primary w-100" onClick={() => agregarAlCarrito(1, 'Chicago Bulls', 95000, '/img/chicago.png')}>Agregar al carrito</button>
@@ -211,7 +231,7 @@ function App() {
           <div className="col-md-4 mb-4">
             <div className="p-3 rounded text-dark-bg">
               <h3>Boston Celtics</h3>
-              <img src="/img/Raiders12.png" className="img-fluid my-2" alt="Boston" style={{height: 100, objectFit: 'cover'}} />
+              <img src="/img/Raiders12.png" className="img-fluid my-2" alt="Boston" style={{ height: 100, objectFit: 'cover' }} />
               <p>Gorra con logotipo bordado y diseño premium.</p>
               <p className="fw-bold">$92.000 COP</p>
               <button className="btn btn-primary w-100" onClick={() => agregarAlCarrito(2, 'Boston Celtics', 92000, '/img/Adobe-Express-file.png')}>Agregar al carrito</button>
@@ -220,7 +240,7 @@ function App() {
           <div className="col-md-4 mb-4">
             <div className="p-3 rounded text-dark-bg">
               <h3>Los Angeles Lakers</h3>
-              <img src="/img/Lakers12.png" className="img-fluid my-2" alt="Lakers" style={{height: 100, objectFit: 'cover'}} />
+              <img src="/img/Lakers12.png" className="img-fluid my-2" alt="Lakers" style={{ height: 100, objectFit: 'cover' }} />
               <p>Modelo clásico con detalles bordados oficiales.</p>
               <p className="fw-bold">$98.000 COP</p>
               <button className="btn btn-primary w-100" onClick={() => agregarAlCarrito(3, 'Los Angeles Lakers', 98000, '/img/Lakers12.png')}>Agregar al carrito</button>
@@ -237,7 +257,7 @@ function App() {
           <div className="col-md-4 mb-4">
             <div className="p-3 rounded text-dark-bg">
               <h3>Atlanta Falcons</h3>
-              <img src="/img/Atlanta12.png" className="img-fluid my-2" alt="Atlanta" style={{height: 100, objectFit: 'cover'}} />
+              <img src="/img/Atlanta12.png" className="img-fluid my-2" alt="Atlanta" style={{ height: 100, objectFit: 'cover' }} />
               <p>Gorra New Era 59FIFTY de la colección Classic.</p>
               <p className="fw-bold">$95.000 COP</p>
               <button className="btn btn-primary w-100" onClick={() => agregarAlCarrito(4, 'Atlanta Falcons', 95000, '/img/Atlanta12.png')}>Agregar al carrito</button>
@@ -246,7 +266,7 @@ function App() {
           <div className="col-md-4 mb-4">
             <div className="p-3 rounded text-dark-bg">
               <h3>Arizona Cardinals</h3>
-              <img src="/img/Arizona12.png" className="img-fluid my-2" alt="Arizona" style={{height: 100, objectFit: 'cover'}} />
+              <img src="/img/Arizona12.png" className="img-fluid my-2" alt="Arizona" style={{ height: 100, objectFit: 'cover' }} />
               <p>Gorra con logotipo bordado y diseño premium.</p>
               <p className="fw-bold">$92.000 COP</p>
               <button className="btn btn-primary w-100" onClick={() => agregarAlCarrito(5, 'Arizona Cardinals', 92000, '/img/Arizona12.png')}>Agregar al carrito</button>
@@ -255,7 +275,7 @@ function App() {
           <div className="col-md-4 mb-4">
             <div className="p-3 rounded text-dark-bg">
               <h3>Las Vegas Raiders</h3>
-              <img src="/img/Raiders12.png" className="img-fluid my-2" alt="Raiders" style={{height: 100, objectFit: 'cover'}} />
+              <img src="/img/Raiders12.png" className="img-fluid my-2" alt="Raiders" style={{ height: 100, objectFit: 'cover' }} />
               <p>Modelo clásico con detalles bordados oficiales.</p>
               <p className="fw-bold">$98.000 COP</p>
               <button className="btn btn-primary w-100" onClick={() => agregarAlCarrito(6, 'Las Vegas Raiders', 98000, '/img/Raiders12.png')}>Agregar al carrito</button>
@@ -269,16 +289,16 @@ function App() {
         <h2 className="text-center mb-4">Colecciones Destacadas</h2>
         <div className="row row-cols-1 row-cols-md-2 g-3">
           <div className="col">
-            <a href="/categorias"><img src="/img/sti.webp" alt="Imagen 1" className="img-fluid my-2" style={{width: '100%', height: 500, objectFit: 'cover', borderRadius: 10}} /></a>
+            <a href="/categorias"><img src="/img/sti.webp" alt="Imagen 1" className="img-fluid my-2" style={{ width: '100%', height: 500, objectFit: 'cover', borderRadius: 10 }} /></a>
           </div>
           <div className="col">
-            <a href="/categorias"><img src="/img/NIgga.webp" alt="Imagen 2" className="img-fluid my-2" style={{width: '100%', height: 500, objectFit: 'cover', borderRadius: 10}} /></a>
+            <a href="/categorias"><img src="/img/NIgga.webp" alt="Imagen 2" className="img-fluid my-2" style={{ width: '100%', height: 500, objectFit: 'cover', borderRadius: 10 }} /></a>
           </div>
           <div className="col">
-            <a href="/categorias"><img src="/img/blanco.webp" alt="Imagen 3" className="img-fluid my-2" style={{width: '100%', height: 500, objectFit: 'cover', borderRadius: 10}} /></a>
+            <a href="/categorias"><img src="/img/blanco.webp" alt="Imagen 3" className="img-fluid my-2" style={{ width: '100%', height: 500, objectFit: 'cover', borderRadius: 10 }} /></a>
           </div>
           <div className="col">
-            <a href="/categorias"><img src="/img/rap.webp" alt="Imagen 4" className="img-fluid my-2" style={{width: '100%', height: 500, objectFit: 'cover', borderRadius: 10}} /></a>
+            <a href="/categorias"><img src="/img/rap.webp" alt="Imagen 4" className="img-fluid my-2" style={{ width: '100%', height: 500, objectFit: 'cover', borderRadius: 10 }} /></a>
           </div>
         </div>
       </div>
@@ -288,13 +308,13 @@ function App() {
         <div id="carouselFooter" className="carousel slide" data-bs-ride="carousel">
           <div className="carousel-inner">
             <div className="carousel-item active">
-              <img src="/img/An-Assortment-of-Baseball-Hats-Displayed-on-Shelves_2468753_wh860.png" className="d-block w-100" alt="Slide 1" style={{height: 400, objectFit: 'cover'}} />
+              <img src="/img/An-Assortment-of-Baseball-Hats-Displayed-on-Shelves_2468753_wh860.png" className="d-block w-100" alt="Slide 1" style={{ height: 400, objectFit: 'cover' }} />
             </div>
             <div className="carousel-item">
-              <img src="/img/image_79235f70-f04a-433c-bd7e-4978de0eec57.jpg" className="d-block w-100" alt="Slide 2" style={{height: 400, objectFit: 'cover'}} />
+              <img src="/img/image_79235f70-f04a-433c-bd7e-4978de0eec57.jpg" className="d-block w-100" alt="Slide 2" style={{ height: 400, objectFit: 'cover' }} />
             </div>
             <div className="carousel-item">
-              <img src="/img/desktop-wallpaper-colourful-caps-caps.jpg" className="d-block w-100" alt="Slide 3" style={{height: 400, objectFit: 'cover'}} />
+              <img src="/img/desktop-wallpaper-colourful-caps-caps.jpg" className="d-block w-100" alt="Slide 3" style={{ height: 400, objectFit: 'cover' }} />
             </div>
           </div>
           <button className="carousel-control-prev" type="button" data-bs-target="#carouselFooter" data-bs-slide="prev">
@@ -315,10 +335,29 @@ function App() {
             <div className="col-md-4 mb-4">
               <h5 className="fw-bold">UrbanCops</h5>
               <p>Gorras urbanas exclusivas con estilo auténtico. Representa tu equipo, tu barrio y tu esencia.</p>
+          
               <div>
-                <a href="#" className="text-white me-3"><i className="bi bi-facebook"></i></a>
-                <a href="#" className="text-white me-3"><i className="bi bi-instagram"></i></a>
-                <a href="#" className="text-white"><i className="bi bi-whatsapp"></i></a>
+                <button
+                  className="btn text-white me-3 p-0 border-0 bg-transparent"
+                  aria-label="Facebook"
+                  onClick={() => window.open('https://facebook.com', '_blank')}
+                >
+                  <i className="bi bi-facebook"></i>
+                </button>
+                <button
+                  className="btn text-white me-3 p-0 border-0 bg-transparent"
+                  aria-label="Instagram"
+                  onClick={() => window.open('https://instagram.com', '_blank')}
+                >
+                  <i className="bi bi-instagram"></i>
+                </button>
+                <button
+                  className="btn text-white p-0 border-0 bg-transparent"
+                  aria-label="WhatsApp"
+                  onClick={() => window.open('https://wa.me/573100000000', '_blank')}
+                >
+                  <i className="bi bi-whatsapp"></i>
+                </button>
               </div>
             </div>
             <div className="col-md-4 mb-4">
