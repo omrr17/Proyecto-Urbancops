@@ -118,7 +118,6 @@ const Registros = ({ token, onLogout }) => {
   );
 };
 
-// ✅ FIX: PropTypes agregados
 Registros.propTypes = {
   token:    PropTypes.string.isRequired,
   onLogout: PropTypes.func.isRequired,
