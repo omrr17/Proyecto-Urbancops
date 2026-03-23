@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
 
 function Navbar() {
   const [contador, setContador] = useState(0);
@@ -28,11 +28,15 @@ function Navbar() {
 
         <div className="collapse navbar-collapse" id="navbarGorras">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            {/* NBA */}
+
+            {/* ✅ NBA - Fix: <a href="#"> reemplazado por <button> */}
             <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle fw-bold" href="#" data-bs-toggle="dropdown">
+              <button
+                className="nav-link dropdown-toggle fw-bold btn btn-link"
+                data-bs-toggle="dropdown"
+              >
                 NBA
-              </a>
+              </button>
               <ul className="dropdown-menu">
                 <li><Link className="dropdown-item" to="/chicago">Chicago Bulls</Link></li>
                 <li><Link className="dropdown-item" to="/boston">Boston Celtics</Link></li>
@@ -40,11 +44,14 @@ function Navbar() {
               </ul>
             </li>
 
-            {/* NFL */}
+            {/* ✅ NFL - Fix: <a href="#"> reemplazado por <button> */}
             <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle fw-bold" href="#" data-bs-toggle="dropdown">
+              <button
+                className="nav-link dropdown-toggle fw-bold btn btn-link"
+                data-bs-toggle="dropdown"
+              >
                 NFL
-              </a>
+              </button>
               <ul className="dropdown-menu">
                 <li><Link className="dropdown-item" to="/atlanta">Atlanta Falcons</Link></li>
                 <li><Link className="dropdown-item" to="/arizona">Arizona Cardinals</Link></li>
@@ -52,11 +59,14 @@ function Navbar() {
               </ul>
             </li>
 
-            {/* MBL */}
+            {/* ✅ MLB - Fix: <a href="#"> reemplazado por <button> */}
             <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle fw-bold" href="#" data-bs-toggle="dropdown">
-                MBL
-              </a>
+              <button
+                className="nav-link dropdown-toggle fw-bold btn btn-link"
+                data-bs-toggle="dropdown"
+              >
+                MLB
+              </button>
               <ul className="dropdown-menu">
                 <li><Link className="dropdown-item" to="/red">Boston Red Sox</Link></li>
                 <li><Link className="dropdown-item" to="/white">Chicago White Sox</Link></li>

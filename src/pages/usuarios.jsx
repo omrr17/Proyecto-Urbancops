@@ -15,7 +15,6 @@ export default function Usuarios() {
   const [editId, setEditId] = useState(null);
   const API_URL = "http://localhost/urban/backend";
 
-  // ✅ función auxiliar para parsear JSON de forma segura
   const parseJSON = async (res) => {
     const text = await res.text();
     try {
@@ -41,7 +40,6 @@ export default function Usuarios() {
     e.preventDefault();
 
     if (editando) {
-      // ✅ ACTUALIZAR
       fetch(`${API_URL}/editar_usuario.php?id=${editId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -61,7 +59,6 @@ export default function Usuarios() {
         })
         .catch((err) => console.error("Error actualizando:", err));
     } else {
-      // ✅ REGISTRAR
       fetch(`${API_URL}/registro.php`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -124,9 +121,14 @@ export default function Usuarios() {
                 {editando ? "Editar Usuario" : "Registro personas"}
               </h3>
               <form onSubmit={handleSubmit}>
+
                 <div className="mb-3">
-                  <label className="form-label text-dark">Nombre</label>
+                  {/* ✅ Fix: htmlFor + id asociados */}
+                  <label htmlFor="nombre" className="form-label text-dark">
+                    Nombre
+                  </label>
                   <input
+                    id="nombre"
                     type="text"
                     name="nombre"
                     className="form-control"
@@ -134,9 +136,14 @@ export default function Usuarios() {
                     onChange={handleChange}
                   />
                 </div>
+
                 <div className="mb-3">
-                  <label className="form-label text-dark">Apellido</label>
+                  {/* ✅ Fix: htmlFor + id asociados */}
+                  <label htmlFor="apellido" className="form-label text-dark">
+                    Apellido
+                  </label>
                   <input
+                    id="apellido"
                     type="text"
                     name="apellido"
                     className="form-control"
@@ -144,9 +151,14 @@ export default function Usuarios() {
                     onChange={handleChange}
                   />
                 </div>
+
                 <div className="mb-3">
-                  <label className="form-label text-dark">Documento</label>
+                  {/* ✅ Fix: htmlFor + id asociados */}
+                  <label htmlFor="documento" className="form-label text-dark">
+                    Documento
+                  </label>
                   <input
+                    id="documento"
                     type="text"
                     name="documento"
                     className="form-control"
@@ -154,9 +166,14 @@ export default function Usuarios() {
                     onChange={handleChange}
                   />
                 </div>
+
                 <div className="mb-3">
-                  <label className="form-label text-dark">Correo</label>
+                  {/* ✅ Fix: htmlFor + id asociados */}
+                  <label htmlFor="correo" className="form-label text-dark">
+                    Correo
+                  </label>
                   <input
+                    id="correo"
                     type="email"
                     name="correo"
                     className="form-control"
@@ -164,6 +181,7 @@ export default function Usuarios() {
                     onChange={handleChange}
                   />
                 </div>
+
                 <button type="submit" className="btn btn-primary w-100">
                   {editando ? "Actualizar" : "Registrar"}
                 </button>
@@ -220,6 +238,7 @@ export default function Usuarios() {
               </table>
             </div>
           </div>
+
         </div>
       </div>
     </div>
