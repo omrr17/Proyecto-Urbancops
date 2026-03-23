@@ -3,13 +3,10 @@ import React, { useEffect, useState } from "react";
 export default function Personalizadas() {
   const [carrito, setCarrito] = useState([]);
 
- 
   useEffect(() => {
-    const carritoGuardado =
-      JSON.parse(localStorage.getItem("carritoUrbanCops")) || [];
+    const carritoGuardado = JSON.parse(localStorage.getItem("carritoUrbanCops")) || [];
     setCarrito(carritoGuardado);
   }, []);
-
 
   const manejarEnvio = (e) => {
     e.preventDefault();
@@ -35,62 +32,63 @@ export default function Personalizadas() {
           </button>
           <div className="collapse navbar-collapse" id="navbarGorras">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              {/* NBA */}
+
+              {/* NBA — ✅ FIX: <button> en lugar de <a href="#"> */}
               <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle fw-bold"
-                  href="#"
+                <button
+                  className="nav-link dropdown-toggle fw-bold btn btn-link p-0 text-white text-decoration-none"
                   data-bs-toggle="dropdown"
+                  aria-expanded="false"
                 >
                   NBA
-                </a>
+                </button>
                 <ul className="dropdown-menu">
                   <li><a className="dropdown-item" href="/chicago">Chicago Bulls</a></li>
                   <li><a className="dropdown-item" href="/boston">Boston Celtics</a></li>
                   <li><a className="dropdown-item" href="/lakers">Los Angeles Lakers</a></li>
                 </ul>
               </li>
-              {/* NFL */}
+
+              {/* NFL — ✅ FIX: <button> en lugar de <a href="#"> */}
               <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle fw-bold"
-                  href="#"
+                <button
+                  className="nav-link dropdown-toggle fw-bold btn btn-link p-0 text-white text-decoration-none"
                   data-bs-toggle="dropdown"
+                  aria-expanded="false"
                 >
                   NFL
-                </a>
+                </button>
                 <ul className="dropdown-menu">
                   <li><a className="dropdown-item" href="/falcon">Atlanta Falcons</a></li>
                   <li><a className="dropdown-item" href="/arizona">Arizona Cardinals</a></li>
                   <li><a className="dropdown-item" href="/vegas">Las Vegas Raiders</a></li>
                 </ul>
               </li>
-              {/* MLB */}
+
+              {/* MLB — ✅ FIX: <button> en lugar de <a href="#"> */}
               <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle fw-bold"
-                  href="#"
+                <button
+                  className="nav-link dropdown-toggle fw-bold btn btn-link p-0 text-white text-decoration-none"
                   data-bs-toggle="dropdown"
+                  aria-expanded="false"
                 >
                   MLB
-                </a>
+                </button>
                 <ul className="dropdown-menu">
                   <li><a className="dropdown-item" href="/red">Boston Red Sox</a></li>
                   <li><a className="dropdown-item" href="/white">Chicago White Sox</a></li>
                   <li><a className="dropdown-item" href="/atlanta">Atlanta Braves</a></li>
                 </ul>
               </li>
+
               <li className="nav-item">
-                <a className="nav-link fw-bold" href="/personalizacion">
-                  Personalizadas
-                </a>
+                <a className="nav-link fw-bold" href="/personalizacion">Personalizadas</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link fw-bold" href="/pqrs">
-                  PQRS
-                </a>
+                <a className="nav-link fw-bold" href="/pqrs">PQRS</a>
               </li>
             </ul>
+
             <form className="d-flex me-3">
               <input
                 id="barra-busqueda"
@@ -128,32 +126,35 @@ export default function Personalizadas() {
         >
           <div className="row g-3">
             <div className="col-md-6">
-              <label className="form-label">Tipo de Gorra:</label>
+              <label htmlFor="tipo-gorra" className="form-label">Tipo de Gorra:</label>
               <input
+                id="tipo-gorra"
                 type="text"
                 className="form-control bg-white text-dark border-secondary"
                 placeholder="Ej. Snapback, Trucker..."
               />
             </div>
             <div className="col-md-6">
-              <label className="form-label">Diseño:</label>
+              <label htmlFor="diseno" className="form-label">Diseño:</label>
               <input
+                id="diseno"
                 type="text"
                 className="form-control bg-white text-dark border-secondary"
                 placeholder="Nombre o logotipo"
               />
             </div>
             <div className="col-md-6">
-              <label className="form-label">Color:</label>
+              <label htmlFor="color" className="form-label">Color:</label>
               <input
+                id="color"
                 type="color"
                 className="form-control form-control-color"
                 style={{ width: "100%" }}
               />
             </div>
             <div className="col-md-6">
-              <label className="form-label">Talla:</label>
-              <select className="form-select bg-white text-dark border-secondary">
+              <label htmlFor="talla" className="form-label">Talla:</label>
+              <select id="talla" className="form-select bg-white text-dark border-secondary">
                 <option>S</option>
                 <option>M</option>
                 <option>L</option>
@@ -161,8 +162,9 @@ export default function Personalizadas() {
               </select>
             </div>
             <div className="col-12">
-              <label className="form-label">Cliente:</label>
+              <label htmlFor="cliente" className="form-label">Cliente:</label>
               <input
+                id="cliente"
                 type="text"
                 className="form-control bg-white text-dark border-secondary"
                 placeholder="Tu nombre o usuario"
@@ -190,37 +192,35 @@ export default function Personalizadas() {
             <div className="col-md-4">
               <h5 className="fw-bold text-white">Navegación</h5>
               <ul className="list-unstyled">
-                <li>
-                  <a href="/" className="text-light text-decoration-none">
-                    Inicio
-                  </a>
-                </li>
-                <li>
-                  <a href="/carrito" className="text-light text-decoration-none">
-                    Carrito
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/personalizadas"
-                    className="text-light text-decoration-none"
-                  >
-                    Personalizadas
-                  </a>
-                </li>
+                <li><a href="/" className="text-light text-decoration-none">Inicio</a></li>
+                <li><a href="/carrito" className="text-light text-decoration-none">Carrito</a></li>
+                <li><a href="/personalizadas" className="text-light text-decoration-none">Personalizadas</a></li>
               </ul>
             </div>
             <div className="col-md-4">
               <h5 className="fw-bold text-white">Síguenos</h5>
-              <a href="#" className="text-light fs-4 me-3">
+              {/* ✅ FIX: <button> en lugar de <a href="#"> */}
+              <button
+                className="btn text-light fs-4 me-3 p-0 border-0 bg-transparent"
+                aria-label="Instagram"
+                onClick={() => window.open('https://instagram.com', '_blank')}
+              >
                 <i className="bi bi-instagram"></i>
-              </a>
-              <a href="#" className="text-light fs-4 me-3">
+              </button>
+              <button
+                className="btn text-light fs-4 me-3 p-0 border-0 bg-transparent"
+                aria-label="Facebook"
+                onClick={() => window.open('https://facebook.com', '_blank')}
+              >
                 <i className="bi bi-facebook"></i>
-              </a>
-              <a href="#" className="text-light fs-4">
+              </button>
+              <button
+                className="btn text-light fs-4 p-0 border-0 bg-transparent"
+                aria-label="TikTok"
+                onClick={() => window.open('https://tiktok.com', '_blank')}
+              >
                 <i className="bi bi-tiktok"></i>
-              </a>
+              </button>
             </div>
           </div>
           <hr className="border-top border-secondary mt-4" />
