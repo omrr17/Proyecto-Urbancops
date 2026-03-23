@@ -45,7 +45,6 @@ import PqrsAdmin from "./components/PqrsAdmin.jsx";
 import PersonalizacionComponent from "./components/personalizacion.jsx";
 import Pedido from "./components/pedido.jsx";
 import Reportes from "./components/reportes.jsx";
-import Configuracion from "./components/configuracion.jsx";
 import Categorias from "./components/Categorias.jsx";
 
 // PQRS para usuarios públicos
@@ -129,7 +128,7 @@ createRoot(document.getElementById("root")).render(
           <Route path="/ventas"        element={<ProtectedAdminRoute><Ventas /></ProtectedAdminRoute>} />
           <Route path="/pedido"        element={<ProtectedAdminRoute><Pedido /></ProtectedAdminRoute>} />
           <Route path="/reportes"      element={<ProtectedAdminRoute><Reportes /></ProtectedAdminRoute>} />
-          <Route path="/configuracion" element={<ProtectedAdminRoute><Configuracion /></ProtectedAdminRoute>} />
+
 
           {/* ── 404 ── */}
           <Route path="*" element={<Navigate to="/" replace />} />

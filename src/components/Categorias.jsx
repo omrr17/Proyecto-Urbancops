@@ -1,4 +1,42 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+
+// ✅ FIX: TeamCard definida FUERA de Categorias para evitar errores de PropTypes y re-renders
+function TeamCard({ equipo, btnClass }) {
+  return (
+    <article
+      className="card h-100 shadow-sm border-0"
+      style={{ transition: 'transform 0.3s', cursor: 'pointer' }}
+      aria-label={equipo.nombre}
+      onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.05)'; }}
+      onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}
+    >
+      <div className="card-body text-center p-4">
+        <img
+          src={equipo.imagen}
+          alt={equipo.nombre}
+          className="img-fluid mb-3"
+          style={{ height: '120px', objectFit: 'contain' }}
+        />
+        <h4 className="fw-bold mb-2">{equipo.nombre}</h4>
+        <p className="text-muted small mb-3">{equipo.desc}</p>
+        <a href={equipo.ruta} className={`btn ${btnClass} w-100`}>
+          Ver Colección <i className="bi bi-arrow-right"></i>
+        </a>
+      </div>
+    </article>
+  );
+}
+
+TeamCard.propTypes = {
+  equipo: PropTypes.shape({
+    nombre: PropTypes.string.isRequired,
+    imagen: PropTypes.string.isRequired,
+    ruta:   PropTypes.string.isRequired,
+    desc:   PropTypes.string.isRequired,
+  }).isRequired,
+  btnClass: PropTypes.string.isRequired,
+};
 
 function Categorias() {
   const [contadorCarrito, setContadorCarrito] = useState(0);
@@ -19,50 +57,16 @@ function Categorias() {
       { nombre: 'Los Angeles Lakers', imagen: '/img/Lakers12.png',  ruta: '/lakers',  desc: 'El show time de la costa oeste' }
     ],
     nfl: [
-      { nombre: 'Atlanta Falcons',    imagen: '/img/Atlanta12.png', ruta: '/falcon',  desc: 'Los halcones del sur profundo' },
-      { nombre: 'Arizona Cardinals',  imagen: '/img/Arizona12.png', ruta: '/arizona', desc: 'El equipo más antiguo de la NFL' },
-      { nombre: 'Las Vegas Raiders',  imagen: '/img/Raiders12.png', ruta: '/vegas',   desc: 'La nación Raider en el desierto' }
+      { nombre: 'Atlanta Falcons',   imagen: '/img/Atlanta12.png', ruta: '/falcon',  desc: 'Los halcones del sur profundo' },
+      { nombre: 'Arizona Cardinals', imagen: '/img/Arizona12.png', ruta: '/arizona', desc: 'El equipo más antiguo de la NFL' },
+      { nombre: 'Las Vegas Raiders', imagen: '/img/Raiders12.png', ruta: '/vegas',   desc: 'La nación Raider en el desierto' }
     ],
     mlb: [
-      { nombre: 'Boston Red Sox',     imagen: '/img/chicago.png',   ruta: '/red',     desc: 'Los medias rojas de Fenway Park' },
-      { nombre: 'Chicago White Sox',  imagen: '/img/chicago.png',   ruta: '/white',   desc: 'El orgullo del South Side' },
-      { nombre: 'Atlanta Braves',     imagen: '/img/Atlanta12.png', ruta: '/atlanta', desc: 'Los bravos campeones del sureste' }
+      { nombre: 'Boston Red Sox',    imagen: '/img/chicago.png',   ruta: '/red',     desc: 'Los medias rojas de Fenway Park' },
+      { nombre: 'Chicago White Sox', imagen: '/img/chicago.png',   ruta: '/white',   desc: 'El orgullo del South Side' },
+      { nombre: 'Atlanta Braves',    imagen: '/img/Atlanta12.png', ruta: '/atlanta', desc: 'Los bravos campeones del sureste' }
     ]
   };
-
-  // ✅ FIX: handler de escala extraído para reutilizar
-  const handleMouseEnter = (e) => e.currentTarget.style.transform = 'scale(1.05)';
-  const handleMouseLeave = (e) => e.currentTarget.style.transform = 'scale(1)';
-
-  // ✅ FIX: componente de tarjeta con role e interactividad accesible
-  const TeamCard = ({ equipo, btnClass }) => (
-    <div
-      className="card h-100 shadow-sm border-0"
-      style={{ transition: 'transform 0.3s', cursor: 'pointer' }}
-      role="region"
-      aria-label={equipo.nombre}
-      tabIndex={0}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onFocus={handleMouseEnter}
-      onBlur={handleMouseLeave}
-      onKeyDown={(e) => { if (e.key === 'Enter') window.location.href = equipo.ruta; }}
-    >
-      <div className="card-body text-center p-4">
-        <img
-          src={equipo.imagen}
-          alt={equipo.nombre}
-          className="img-fluid mb-3"
-          style={{ height: '120px', objectFit: 'contain' }}
-        />
-        <h4 className="fw-bold mb-2">{equipo.nombre}</h4>
-        <p className="text-muted small mb-3">{equipo.desc}</p>
-        <a href={equipo.ruta} className={`btn ${btnClass} w-100`}>
-          Ver Colección <i className="bi bi-arrow-right"></i>
-        </a>
-      </div>
-    </div>
-  );
 
   return (
     <>
@@ -83,8 +87,6 @@ function Categorias() {
 
           <div className="collapse navbar-collapse" id="navbarGorras">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-
-              {/* NBA — ✅ FIX: <button> en lugar de <a href="#"> */}
               <li className="nav-item dropdown">
                 <button
                   className="nav-link dropdown-toggle fw-bold btn btn-link p-0 text-white text-decoration-none"
@@ -100,7 +102,6 @@ function Categorias() {
                 </ul>
               </li>
 
-              {/* NFL — ✅ FIX: <button> en lugar de <a href="#"> */}
               <li className="nav-item dropdown">
                 <button
                   className="nav-link dropdown-toggle fw-bold btn btn-link p-0 text-white text-decoration-none"
@@ -116,7 +117,6 @@ function Categorias() {
                 </ul>
               </li>
 
-              {/* MLB — ✅ FIX: <button> en lugar de <a href="#"> */}
               <li className="nav-item dropdown">
                 <button
                   className="nav-link dropdown-toggle fw-bold btn btn-link p-0 text-white text-decoration-none"
@@ -250,7 +250,6 @@ function Categorias() {
             <div className="col-md-4 mb-4">
               <h5 className="fw-bold">UrbanCops</h5>
               <p>Gorras urbanas exclusivas con estilo auténtico. Representa tu equipo, tu barrio y tu esencia.</p>
-              {/* ✅ FIX: <button> en lugar de <a href="#"> */}
               <div>
                 <button
                   className="btn text-white me-3 p-0 border-0 bg-transparent"

@@ -7,7 +7,7 @@ export default function Envios() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
-  
+
   const [editingId, setEditingId] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deletingId, setDeletingId] = useState(null);
@@ -34,7 +34,7 @@ export default function Envios() {
 
   const handleCreateOrUpdate = async (e) => {
     e.preventDefault();
-    
+
     if (!form.id_pedido || !form.direccion) {
       setError("Pedido y dirección requeridos");
       return;
@@ -57,7 +57,7 @@ export default function Envios() {
         setEnvios((s) => [...s, created]);
         setSuccess("¡Envío creado exitosamente!");
       }
-      
+
       await fetchEnvios();
       resetForm();
       setTimeout(() => setSuccess(false), 3000);
@@ -83,7 +83,7 @@ export default function Envios() {
     try {
       setLoading(true);
       setError(null);
-      await deleteEnvio(deletingId);  
+      await deleteEnvio(deletingId);
       setSuccess("¡Envío eliminado exitosamente!");
       await fetchEnvios();
       setTimeout(() => setSuccess(false), 3000);
@@ -133,8 +133,8 @@ export default function Envios() {
     <div className="container mt-4">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2>📦 Envíos</h2>
-        <button 
-          className="btn btn-primary" 
+        <button
+          className="btn btn-primary"
           onClick={() => !editingId && setShowEditModal(true)}
           disabled={editingId !== null}
         >
@@ -152,17 +152,19 @@ export default function Envios() {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">{editingId ? "Editar Envío" : "Nuevo Envío"}</h5>
-                <button 
-                  type="button" 
-                  className="btn-close" 
+                <button
+                  type="button"
+                  className="btn-close"
                   onClick={resetForm}
                 ></button>
               </div>
+             // ✅ Corregido
               <form onSubmit={handleCreateOrUpdate}>
                 <div className="modal-body">
                   <div className="mb-3">
-                    <label className="form-label">ID Pedido *</label>
+                    <label htmlFor="id_pedido" className="form-label">ID Pedido *</label>
                     <input
+                      id="id_pedido"
                       type="number"
                       name="id_pedido"
                       value={form.id_pedido}
@@ -173,8 +175,9 @@ export default function Envios() {
                     />
                   </div>
                   <div className="mb-3">
-                    <label className="form-label">Dirección *</label>
+                    <label htmlFor="direccion" className="form-label">Dirección *</label>
                     <input
+                      id="direccion"
                       type="text"
                       name="direccion"
                       value={form.direccion}
@@ -184,8 +187,9 @@ export default function Envios() {
                     />
                   </div>
                   <div className="mb-3">
-                    <label className="form-label">Estado</label>
+                    <label htmlFor="estado" className="form-label">Estado</label>
                     <select
+                      id="estado"
                       name="estado"
                       value={form.estado}
                       onChange={handleChange}
@@ -198,16 +202,16 @@ export default function Envios() {
                   </div>
                 </div>
                 <div className="modal-footer">
-                  <button 
-                    type="button" 
-                    className="btn btn-secondary" 
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
                     onClick={resetForm}
                   >
                     Cancelar
                   </button>
-                  <button 
-                    type="submit" 
-                    className="btn btn-primary" 
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
                     disabled={loading}
                   >
                     {loading ? "Procesando..." : editingId ? "Actualizar" : "Crear"}
@@ -231,9 +235,9 @@ export default function Envios() {
                 <p>¿Estás seguro de que deseas eliminar este envío? Esta acción no se puede deshacer.</p>
               </div>
               <div className="modal-footer">
-                <button 
-                  type="button" 
-                  className="btn btn-secondary" 
+                <button
+                  type="button"
+                  className="btn btn-secondary"
                   onClick={() => {
                     setShowDeleteModal(false);
                     setDeletingId(null);
@@ -241,9 +245,9 @@ export default function Envios() {
                 >
                   Cancelar
                 </button>
-                <button 
-                  type="button" 
-                  className="btn btn-danger" 
+                <button
+                  type="button"
+                  className="btn btn-danger"
                   onClick={handleDelete}
                   disabled={loading}
                 >
@@ -257,7 +261,7 @@ export default function Envios() {
 
       {/* Tabla de envíos */}
       {loading && !showEditModal && !showDeleteModal && <div className="text-center p-4">Cargando envíos...</div>}
-      
+
       {!loading && envios.length === 0 ? (
         <div className="alert alert-info text-center">No hay envíos registrados</div>
       ) : (
@@ -280,7 +284,7 @@ export default function Envios() {
                   <td>{ev.id_pedido}</td>
                   <td>{ev.direccion}</td>
                   <td>
-                    <span 
+                    <span
                       style={{
                         backgroundColor: getEstadoColor(ev.estado),
                         color: 'white',
@@ -290,9 +294,9 @@ export default function Envios() {
                       }}
                     >
                       {getEstadoIcon(ev.estado)}{" "}
-{ev.estado
-  ? ev.estado.charAt(0).toUpperCase() + ev.estado.slice(1)
-  : "Sin estado"}
+                      {ev.estado
+                        ? ev.estado.charAt(0).toUpperCase() + ev.estado.slice(1)
+                        : "Sin estado"}
 
                     </span>
                   </td>

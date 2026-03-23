@@ -235,9 +235,9 @@ const DetallePedido = () => {
           <div className="col-12">
             <div className="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
               <div>
+              
                 <h2 className="text-white mb-1 fw-bold">
-                  <i className="bi bi-receipt me-2"></i>
-                  Detalles de Pedidos
+                  <i className="bi bi-receipt me-2"></i>Detalles de Pedidos
                 </h2>
                 <p className="text-muted-dark mb-0">Gestiona los productos de cada pedido</p>
               </div>
@@ -333,7 +333,7 @@ const DetallePedido = () => {
                       />
                     </div>
 
-        
+
                     <div className="col-12 col-md-6 col-lg-3">
                       <label htmlFor="cantidad" className="form-label text-white fw-bold small">
                         <i className="bi bi-123 me-1"></i>Cantidad

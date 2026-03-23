@@ -99,30 +99,6 @@ const styles = {
     fontSize: '13px',
     lineHeight: '1.5'
   },
-  statsGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-    gap: '20px',
-    marginBottom: '40px'
-  },
-  statCard: {
-    background: '#111111',
-    border: '1px solid #222222',
-    borderRadius: '12px',
-    padding: '24px'
-  },
-  statValue: {
-    fontSize: '36px',
-    fontWeight: 'bold',
-    color: '#10b981',
-    marginBottom: '8px'
-  },
-  statLabel: {
-    color: '#999999',
-    fontSize: '14px',
-    textTransform: 'uppercase',
-    letterSpacing: '0.5px'
-  }
 };
 
 export default function Home() {
@@ -159,50 +135,47 @@ export default function Home() {
     return "👤";
   };
 
-  // Módulos disponibles según rol
   const superAdminModules = [
-    { icon: "👥", title: "Usuarios", desc: "Gestión completa de usuarios del sistema", path: "/usuarios", color: "#10b981" },
-    { icon: "🎭", title: "Roles", desc: "Administrar roles y permisos", path: "/roles", color: "#3b82f6" },
-    { icon: "📦", title: "Inventario", desc: "Control de productos y stock", path: "/inventario", color: "#8b5cf6" },
-    { icon: "🛒", title: "Ventas", desc: "Gestión de ventas y pedidos", path: "/ventas", color: "#f59e0b" },
-    { icon: "📋", title: "Pedidos", desc: "Administrar pedidos de clientes", path: "/pedido", color: "#ef4444" },
-     { icon: "🎨", title: "Personalizaciones", desc: "Gestión de personalizaciones", path: "/personalizacion", color: "#ec4899" },
-    { icon: "🚚", title: "Envíos", desc: "Control de envíos y entregas", path: "/envios", color: "#06b6d4" },
-    { icon: "💳", title: "Pagos", desc: "Administración de pagos", path: "/pago", color: "#14b8a6" },
-    { icon: "📝", title: "PQRS", desc: "Peticiones, quejas y reclamos", path: "/pqrs", color: "#f97316" },
-    { icon: "📊", title: "Registro", desc: "Historial y logs del sistema", path: "/registros", color: "#6366f1" },
-
+    { icon: "👥", title: "Usuarios",         desc: "Gestión completa de usuarios del sistema", path: "/usuarios",       color: "#10b981" },
+    { icon: "🎭", title: "Roles",             desc: "Administrar roles y permisos",             path: "/roles",          color: "#3b82f6" },
+    { icon: "📦", title: "Inventario",        desc: "Control de productos y stock",             path: "/inventario",     color: "#8b5cf6" },
+    { icon: "🛒", title: "Ventas",            desc: "Gestión de ventas y pedidos",              path: "/ventas",         color: "#f59e0b" },
+    { icon: "📋", title: "Pedidos",           desc: "Administrar pedidos de clientes",          path: "/pedido",         color: "#ef4444" },
+    { icon: "🎨", title: "Personalizaciones", desc: "Gestión de personalizaciones",             path: "/personalizacion",color: "#ec4899" },
+    { icon: "🚚", title: "Envíos",            desc: "Control de envíos y entregas",             path: "/envios",         color: "#06b6d4" },
+    { icon: "💳", title: "Pagos",             desc: "Administración de pagos",                  path: "/pago",           color: "#14b8a6" },
+    { icon: "📝", title: "PQRS",              desc: "Peticiones, quejas y reclamos",            path: "/pqrs",           color: "#f97316" },
+    { icon: "📊", title: "Registro",          desc: "Historial y logs del sistema",             path: "/registros",      color: "#6366f1" },
   ];
 
   const adminModules = [
-    { icon: "👥", title: "Usuarios", desc: "Ver usuarios del sistema", path: "/usuarios", color: "#10b981" },
-    { icon: "📦", title: "Inventario", desc: "Control de productos y stock", path: "/inventario", color: "#8b5cf6" },
-    { icon: "🛒", title: "Ventas", desc: "Gestión de ventas", path: "/ventas", color: "#f59e0b" },
-    { icon: "📋", title: "Pedidos", desc: "Administrar pedidos", path: "/pedidos", color: "#ef4444" },
-    { icon: "📝", title: "PQRS", desc: "Atender PQRS", path: "/pqrs", color: "#f97316" }
+    { icon: "👥", title: "Usuarios",  desc: "Ver usuarios del sistema",   path: "/usuarios",  color: "#10b981" },
+    { icon: "📦", title: "Inventario",desc: "Control de productos y stock",path: "/inventario",color: "#8b5cf6" },
+    { icon: "🛒", title: "Ventas",    desc: "Gestión de ventas",           path: "/ventas",    color: "#f59e0b" },
+    { icon: "📋", title: "Pedidos",   desc: "Administrar pedidos",         path: "/pedidos",   color: "#ef4444" },
+    { icon: "📝", title: "PQRS",      desc: "Atender PQRS",               path: "/pqrs",      color: "#f97316" }
   ];
 
   const userModules = [
-    { icon: "🛒", title: "Mis Compras", desc: "Ver historial de compras", path: "/mis-compras", color: "#10b981" },
-    { icon: "📋", title: "Mis Pedidos", desc: "Seguimiento de pedidos", path: "/mis-pedidos", color: "#3b82f6" },
-    { icon: "🎨", title: "Personalizar", desc: "Crear diseños personalizados", path: "/personalizar", color: "#ec4899" },
-    { icon: "📝", title: "Soporte", desc: "Crear ticket de soporte", path: "/soporte", color: "#f59e0b" }
+    { icon: "🛒", title: "Mis Compras", desc: "Ver historial de compras",        path: "/mis-compras", color: "#10b981" },
+    { icon: "📋", title: "Mis Pedidos", desc: "Seguimiento de pedidos",          path: "/mis-pedidos", color: "#3b82f6" },
+    { icon: "🎨", title: "Personalizar",desc: "Crear diseños personalizados",    path: "/personalizar",color: "#ec4899" },
+    { icon: "📝", title: "Soporte",     desc: "Crear ticket de soporte",         path: "/soporte",     color: "#f59e0b" }
   ];
 
   if (loading) {
     return (
-      <div style={{...styles.container, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-        <div style={{textAlign: 'center'}}>
+      <div style={{ ...styles.container, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ textAlign: 'center' }}>
           <div style={{
-            width: '60px',
-            height: '60px',
+            width: '60px', height: '60px',
             border: '4px solid #222222',
             borderTop: '4px solid #ffffff',
             borderRadius: '50%',
             animation: 'spin 1s linear infinite',
             margin: '0 auto'
           }}></div>
-          <p style={{color: '#999999', marginTop: '20px'}}>Cargando...</p>
+          <p style={{ color: '#999999', marginTop: '20px' }}>Cargando...</p>
         </div>
       </div>
     );
@@ -210,32 +183,23 @@ export default function Home() {
 
   if (!user) {
     return (
-      <div style={{...styles.container, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px'}}>
+      <div style={{ ...styles.container, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
         <div style={{
-          background: '#111111',
-          border: '1px solid #222222',
-          borderRadius: '12px',
-          padding: '48px',
-          maxWidth: '450px',
-          textAlign: 'center'
+          background: '#111111', border: '1px solid #222222',
+          borderRadius: '12px', padding: '48px', maxWidth: '450px', textAlign: 'center'
         }}>
-          <div style={{fontSize: '72px', marginBottom: '24px'}}>🔒</div>
-          <h2 style={{fontSize: '28px', fontWeight: 'bold', color: '#ffffff', marginBottom: '12px'}}>
+          <div style={{ fontSize: '72px', marginBottom: '24px' }}>🔒</div>
+          <h2 style={{ fontSize: '28px', fontWeight: 'bold', color: '#ffffff', marginBottom: '12px' }}>
             No has iniciado sesión
           </h2>
-          <p style={{color: '#999999', marginBottom: '32px'}}>
+          <p style={{ color: '#999999', marginBottom: '32px' }}>
             Por favor inicia sesión para acceder
           </p>
           <a href="/login" style={{
-            display: 'inline-block',
-            width: '100%',
-            background: '#ffffff',
-            color: '#000000',
-            padding: '16px 32px',
-            borderRadius: '6px',
-            textDecoration: 'none',
-            fontWeight: '700',
-            textTransform: 'uppercase'
+            display: 'inline-block', width: '100%',
+            background: '#ffffff', color: '#000000',
+            padding: '16px 32px', borderRadius: '6px',
+            textDecoration: 'none', fontWeight: '700', textTransform: 'uppercase'
           }}>
             Iniciar Sesión
           </a>
@@ -246,8 +210,8 @@ export default function Home() {
 
   const role = getRoleText(user.rol);
   const roleIcon = getRoleIcon(role);
-  
-  // Determinar módulos según rol
+
+  // ✅ FIX: determinar módulos según rol
   let modules = userModules;
   if (user.rol === 1) modules = superAdminModules;
   else if (user.rol === 2) modules = adminModules;
@@ -271,12 +235,12 @@ export default function Home() {
           }
         `}
       </style>
-      
+
       <nav style={styles.nav}>
         <div style={styles.navContent}>
           <span style={styles.logo}>URBAN COPS</span>
           <div style={styles.userInfo}>
-            <span style={{color: '#999999', fontSize: '14px'}}>
+            <span style={{ color: '#999999', fontSize: '14px' }}>
               {roleIcon} {role} | Usuario #{user.id}
             </span>
             <button onClick={handleLogout} style={styles.logoutBtn} className="logout-hover">
@@ -288,22 +252,21 @@ export default function Home() {
 
       <div style={styles.content}>
         <div style={styles.welcomeCard}>
-          <h1 style={{fontSize: '42px', fontWeight: 'bold', marginBottom: '8px'}}>
+          <h1 style={{ fontSize: '42px', fontWeight: 'bold', marginBottom: '8px' }}>
             BIENVENIDO, {role.toUpperCase()}
           </h1>
-          <p style={{color: '#999999', fontSize: '16px'}}>
+          <p style={{ color: '#999999', fontSize: '16px' }}>
             Panel de administración y control del sistema
           </p>
         </div>
 
-        
-
         <h2 style={styles.sectionTitle}>Módulos del Sistema</h2>
-        
+
         <div style={styles.grid}>
+          {/* ✅ FIX: key={index} en lugar de key={post.id} que no existía */}
           {modules.map((module, index) => (
-            <a 
-              key={post.id}
+            <a
+              key={index}
               href={module.path}
               style={styles.moduleCard}
               className="module-hover"

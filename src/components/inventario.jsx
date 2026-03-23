@@ -123,12 +123,12 @@ const Inventario = () => {
   };
 
   // Calcular totales
-  const totalStock = inventarios.reduce((sum, item) => sum + parseInt(item.stock || 0), 0);
+  const totalStock = inventarios.reduce((sum, item) => sum + Number.parseInt(item.stock || 0), 0);
   const valorTotalInventario = inventarios.reduce((sum, item) => 
-    sum + (parseFloat(item.precio_venta || 0) * parseInt(item.stock || 0)), 0
+    sum + (Number.parseFloat(item.precio_venta || 0) * Number.parseInt(item.stock || 0)), 0
   );
   const productosStockBajo = inventarios.filter(item => 
-    parseInt(item.stock) <= parseInt(item.stock_minimo)
+    Number.parseInt(item.stock) <= Number.parseInt(item.stock_minimo)
   ).length;
 
   return (
