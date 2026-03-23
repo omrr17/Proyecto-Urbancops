@@ -44,9 +44,9 @@ const Pago = () => {
     try {
       setError(null);
       const pagoData = {
-        id_pedido: parseInt(form.id_pedido),
+        id_pedido: Number.parseInt(form.id_pedido),
         metodo_pago: form.metodo_pago,
-        monto: parseFloat(form.monto),
+        monto: Number.parseFloat(form.monto),
         fecha_pago: new Date().toISOString().split("T")[0],
       };
 
@@ -167,11 +167,13 @@ const Pago = () => {
                   onClick={resetForm}
                 ></button>
               </div>
+
               <form onSubmit={handleCreateOrUpdate}>
                 <div className="modal-body">
                   <div className="mb-3">
-                    <label className="form-label">ID Pedido *</label>
+                    <label htmlFor="id_pedido" className="form-label">ID Pedido *</label>
                     <input
+                      id="id_pedido"
                       type="number"
                       name="id_pedido"
                       value={form.id_pedido}
@@ -181,9 +183,11 @@ const Pago = () => {
                       disabled={editingId !== null}
                     />
                   </div>
+
                   <div className="mb-3">
-                    <label className="form-label">Método de Pago *</label>
+                    <label htmlFor="metodo_pago" className="form-label">Método de Pago *</label>
                     <select
+                      id="metodo_pago"
                       name="metodo_pago"
                       value={form.metodo_pago}
                       onChange={handleChange}
@@ -194,9 +198,11 @@ const Pago = () => {
                       <option value="Transferencia">Transferencia</option>
                     </select>
                   </div>
+              
                   <div className="mb-3">
-                    <label className="form-label">Monto *</label>
+                    <label htmlFor="monto" className="form-label">Monto *</label>
                     <input
+                      id="monto"
                       type="number"
                       step="0.01"
                       name="monto"
