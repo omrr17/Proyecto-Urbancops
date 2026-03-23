@@ -1,6 +1,14 @@
-import { useEffect } from "react";
+// atlanta.jsx
+import React, { useEffect } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
-export default function Braves() {
+export default function Atlanta() {
+  useEffect(() => {
+    actualizarContadorCarrito();
+  }, []);
+
   const agregarAlCarrito = (nombre, precio, imagen) => {
     const carrito = JSON.parse(localStorage.getItem("carritoUrbanCops")) || [];
     carrito.push({ nombre, precio, imagen });
@@ -14,17 +22,25 @@ export default function Braves() {
     if (contador) contador.textContent = carrito.length;
   };
 
-  useEffect(() => {
-    actualizarContadorCarrito();
-  }, []);
+  const productos = [
+    { nombre: "Atlanta Falcons Classic",    precio: 95000, imagen: "../img/atlanta/10517894_1-removebg-preview.png",               desc: "Diseño clásico en negro con visera recta y escudo frontal bordado." },
+    { nombre: "Atlanta Falcons Black",      precio: 92000, imagen: "../img/atlanta/ATL-removebg-preview.png",                       desc: "Gorra negra con detalles en rojo y logotipo frontal en alto relieve." },
+    { nombre: "Atlanta Falcons Logo",       precio: 98000, imagen: "../img/atlanta/0ac1e7f183016ec72c3de6715c4a0e2a-removebg-preview.png", desc: "Modelo oscuro con bordado oficial y bandera lateral." },
+    { nombre: "Falcons Blanca Tricolor",    precio: 95000, imagen: "../img/atlanta/images-removebg-preview.png",                    desc: "Blanca con visera negra y detalles en rojo." },
+    { nombre: "Falcons Azul Hielo",         precio: 92000, imagen: "../img/atlanta/10517894_1-removebg-preview.png",                desc: "Tonos azul grisáceo con estilo moderno y escudo clásico." },
+    { nombre: "Falcons Roja Curva",         precio: 98000, imagen: "../img/atlanta/images__2_-removebg-preview.png",                desc: "Roja con visera curva y diseño deportivo." },
+    { nombre: "Falcons Roja Clásica",       precio: 95000, imagen: "../img/atlanta/atlantafalcoms2-removebg-preview.png",           desc: "Negra con visera roja y bordado frontal en blanco." },
+    { nombre: "Falcons Blanca con Rojo",    precio: 92000, imagen: "../img/atlanta/negraroja-removebg-preview.png",                 desc: "Panel frontal blanco, visera gris y detalles en rojo." },
+    { nombre: "Falcons Gris Hormada",       precio: 98000, imagen: "../img/atlanta/rojaynegra-removebg-preview.png",                desc: "Gris texturizada con logo bordado y estructura firme." },
+  ];
 
   return (
     <>
-      {/* Navbar */}
+      {/* NAVBAR */}
       <nav className="navbar navbar-expand-lg shadow-sm sticky-top bg-dark">
         <div className="container">
           <a className="navbar-brand" href="/">
-            <img src="/img/logo12.png" alt="UrbanCops" width="40" />
+            <img src="../img/logo12.png" alt="UrbanCops" width="40" />
           </a>
           <button
             className="navbar-toggler text-white"
@@ -81,7 +97,7 @@ export default function Braves() {
                 <ul className="dropdown-menu">
                   <li><a className="dropdown-item" href="/red">Boston Red Sox</a></li>
                   <li><a className="dropdown-item" href="/white">Chicago White Sox</a></li>
-                  <li><a className="dropdown-item" href="/braves">Atlanta Braves</a></li>
+                  <li><a className="dropdown-item" href="/atlanta">Atlanta Braves</a></li>
                 </ul>
               </li>
 
@@ -93,14 +109,7 @@ export default function Braves() {
               </li>
             </ul>
 
-            {/* Buscador */}
-            <form
-              className="d-flex me-3"
-              onSubmit={(e) => {
-                e.preventDefault();
-                alert("Función de búsqueda en desarrollo");
-              }}
-            >
+            <form className="d-flex me-3">
               <input
                 id="barra-busqueda"
                 className="form-control"
@@ -109,11 +118,9 @@ export default function Braves() {
                 aria-label="Buscar"
               />
             </form>
-
             <a href="/login" className="btn text-white">
               <i className="bi bi-person"></i>
             </a>
-
             <button
               className="btn text-white position-relative"
               onClick={() => (window.location.href = "/carrito")}
@@ -130,11 +137,11 @@ export default function Braves() {
         </div>
       </nav>
 
-      {/* Carousel */}
+      {/* CARRUSEL */}
       <div id="carouselExampleControls" className="carousel slide" data-bs-ride="carousel">
         <div className="carousel-inner">
           <div className="carousel-item active">
-            <img src="/img/Braves/Wall.jpg" className="d-block w-100" alt="Atlanta Braves" />
+            <img src="../img/falconw.jpg" className="d-block w-100" alt="Slide 1" />
           </div>
         </div>
         <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
@@ -147,47 +154,29 @@ export default function Braves() {
         </button>
       </div>
 
-      {/* Descripción */}
+      {/* DESCRIPCIÓN */}
       <section className="container my-5 text-center">
-        <h2>Atlanta Braves</h2>
+        <h2>Atlanta Falcons</h2>
         <p>
-          Los Atlanta Braves son un equipo de béisbol profesional con sede en
-          Atlanta, Georgia. Fundado en 1871, es uno de los equipos más antiguos
-          de las Grandes Ligas. Con una rica historia y múltiples campeonatos,
-          los Braves son símbolo de orgullo para su ciudad y tienen una gran
-          base de fanáticos.
+          Los Atlanta Falcons se han convertido en un símbolo del fútbol americano gracias a
+          su garra, historia y pasión en el campo. Su emblema, el halcón rojo, transmite
+          fuerza y velocidad, convirtiéndose en un ícono que va más allá del deporte. Las
+          gorras de los Falcons son una muestra de estilo urbano con identidad deportiva,
+          ideales para fanáticos y amantes del diseño con actitud.
         </p>
       </section>
 
-      {/* Productos */}
+      {/* PRODUCTOS */}
       <section className="container my-5 text-center">
         <div className="row justify-content-center mt-4">
-          {[
-            { nombre: "Atlanta Braves Classic Fit",    precio: 95000, imagen: "/img/Braves/1-removebg-preview.png", desc: "Gorra New Era 59FIFTY de la colección NBA Classic." },
-            { nombre: "Atlanta Braves Heritage Line",  precio: 92000, imagen: "/img/Braves/2-removebg-preview.png", desc: "Gorra con logotipo bordado y diseño premium." },
-            { nombre: "Atlanta Braves Night Game",     precio: 98000, imagen: "/img/Braves/3-removebg-preview.png", desc: "Modelo clásico con detalles bordados oficiales." },
-            { nombre: "Atlanta Braves Retro Swing",    precio: 95000, imagen: "/img/Braves/4-removebg-preview.png", desc: "Gorra New Era multi color." },
-            { nombre: "Atlanta Braves Southern Pride", precio: 92000, imagen: "/img/Braves/5-removebg-preview.png", desc: "Gorra con logotipo bordado y diseño premium." },
-            { nombre: "Atlanta Braves Bold Edition",   precio: 98000, imagen: "/img/Braves/6-removebg-preview.png", desc: "Modelo clásico con detalles bordados oficiales." },
-            { nombre: "Atlanta Braves Street Style",   precio: 95000, imagen: "/img/Braves/7-removebg-preview.png", desc: "Gorra New Era de la colección NBA Classic." },
-            { nombre: "Atlanta Braves Home Field",     precio: 92000, imagen: "/img/Braves/8-removebg-preview.png", desc: "Gorra con logotipo bordado y diseño premium." },
-            { nombre: "Atlanta Braves Legacy Cap",     precio: 98000, imagen: "/img/Braves/9-removebg-preview.png", desc: "Modelo clásico con detalles bordados oficiales." },
-          ].map((p, i) => (
+          {productos.map((p, i) => (
             <div key={i} className="col-md-4 mb-4">
               <div className="p-3 rounded text-dark-bg">
                 <h3>{p.nombre}</h3>
-                <img
-                  src={p.imagen}
-                  className="img-fluid my-2"
-                  style={{ height: "100px", objectFit: "cover" }}
-                  alt={p.nombre}
-                />
+                <img src={p.imagen} alt={p.nombre} className="img-fluid my-2" style={{ height: "100px", objectFit: "cover" }} />
                 <p>{p.desc}</p>
                 <p className="fw-bold">${p.precio.toLocaleString()} COP</p>
-                <button
-                  className="btn btn-primary w-100"
-                  onClick={() => agregarAlCarrito(p.nombre, p.precio, p.imagen)}
-                >
+                <button className="btn btn-primary w-100" onClick={() => agregarAlCarrito(p.nombre, p.precio, p.imagen)}>
                   Agregar al carrito
                 </button>
               </div>
@@ -196,7 +185,7 @@ export default function Braves() {
         </div>
       </section>
 
-      {/* Footer */}
+      {/* FOOTER */}
       <footer className="bg-black text-white pt-5 pb-3 mt-5">
         <div className="container">
           <div className="row">
