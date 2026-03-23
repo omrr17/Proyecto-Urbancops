@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { getUsuarios } from "../services/usuarioService";
 
 function Usuarios() {
   const [usuarios, setUsuarios] = useState([]);
