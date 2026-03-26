@@ -1,4 +1,4 @@
-// ✅ Corregido
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
@@ -21,7 +21,7 @@ const ProtectedRoute = ({ children, requiredRole }) => {
   return children;
 };
 
-// ✅ FIX: PropTypes para children y requiredRole
+
 ProtectedRoute.propTypes = {
   children:     PropTypes.node.isRequired,
   requiredRole: PropTypes.string,

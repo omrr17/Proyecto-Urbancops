@@ -19,7 +19,7 @@ if ($id && $data) {
     $documento = $conn->real_escape_string($data["documento"]);
     $correo = $conn->real_escape_string($data["correo"]);
 
-    $sql = "UPDATE usuarios 
+    $sql = "UPDATE usuarios
         SET nombre='$nombre', apellido='$apellido', documento='$documento', correo='$correo'
         WHERE id_usuario=$id";
 

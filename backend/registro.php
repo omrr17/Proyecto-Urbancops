@@ -22,7 +22,7 @@ $apellido = $conn->real_escape_string($data["apellido"]);
 $documento = $conn->real_escape_string($data["documento"]);
 $correo = $conn->real_escape_string($data["correo"]);
 
-$sql = "INSERT INTO usuarios (nombre, apellido, documento, correo) 
+$sql = "INSERT INTO usuarios (nombre, apellido, documento, correo)
     VALUES ('$nombre', '$apellido', '$documento', '$correo')";
 
 if ($conn->query($sql)) {

@@ -110,7 +110,6 @@ export default function Home() {
     if (token) {
       try {
         const decoded = jwtDecode(token);
-        console.log("Token decodificado:", decoded);
         setUser(decoded);
       } catch (err) {
         console.error("Error:", err);
@@ -136,31 +135,32 @@ export default function Home() {
   };
 
   const superAdminModules = [
-    { icon: "👥", title: "Usuarios",         desc: "Gestión completa de usuarios del sistema", path: "/usuarios",       color: "#10b981" },
-    { icon: "🎭", title: "Roles",             desc: "Administrar roles y permisos",             path: "/roles",          color: "#3b82f6" },
-    { icon: "📦", title: "Inventario",        desc: "Control de productos y stock",             path: "/inventario",     color: "#8b5cf6" },
-    { icon: "🛒", title: "Ventas",            desc: "Gestión de ventas y pedidos",              path: "/ventas",         color: "#f59e0b" },
-    { icon: "📋", title: "Pedidos",           desc: "Administrar pedidos de clientes",          path: "/pedido",         color: "#ef4444" },
-    { icon: "🎨", title: "Personalizaciones", desc: "Gestión de personalizaciones",             path: "/personalizacion",color: "#ec4899" },
-    { icon: "🚚", title: "Envíos",            desc: "Control de envíos y entregas",             path: "/envios",         color: "#06b6d4" },
-    { icon: "💳", title: "Pagos",             desc: "Administración de pagos",                  path: "/pago",           color: "#14b8a6" },
-    { icon: "📝", title: "PQRS",              desc: "Peticiones, quejas y reclamos",            path: "/pqrs",           color: "#f97316" },
-    { icon: "📊", title: "Registro",          desc: "Historial y logs del sistema",             path: "/registros",      color: "#6366f1" },
+    { icon: "👥", title: "Usuarios",         desc: "Gestión completa de usuarios del sistema", path: "/usuarios",                color: "#10b981" },
+    { icon: "🎭", title: "Roles",             desc: "Administrar roles y permisos",             path: "/roles",                   color: "#3b82f6" },
+    { icon: "📦", title: "Inventario",        desc: "Control de productos y stock",             path: "/inventario",              color: "#8b5cf6" },
+    { icon: "🛒", title: "Ventas",            desc: "Gestión de ventas y pedidos",              path: "/ventas",                  color: "#f59e0b" },
+    { icon: "📋", title: "Pedidos",           desc: "Administrar pedidos de clientes",          path: "/pedido",                  color: "#ef4444" },
+    { icon: "🎨", title: "Personalizaciones", desc: "Gestión de personalizaciones",             path: "/admin/personalizaciones", color: "#ec4899" },
+    { icon: "🚚", title: "Envíos",            desc: "Control de envíos y entregas",             path: "/envios",                  color: "#06b6d4" },
+    { icon: "💳", title: "Pagos",             desc: "Administración de pagos",                  path: "/pago",                    color: "#14b8a6" },
+    { icon: "📝", title: "PQRS",              desc: "Peticiones, quejas y reclamos",            path: "/pqrs",                    color: "#f97316" },
+    { icon: "📊", title: "Registro",          desc: "Historial y logs del sistema",             path: "/registros",               color: "#6366f1" },
   ];
 
   const adminModules = [
-    { icon: "👥", title: "Usuarios",  desc: "Ver usuarios del sistema",   path: "/usuarios",  color: "#10b981" },
-    { icon: "📦", title: "Inventario",desc: "Control de productos y stock",path: "/inventario",color: "#8b5cf6" },
-    { icon: "🛒", title: "Ventas",    desc: "Gestión de ventas",           path: "/ventas",    color: "#f59e0b" },
-    { icon: "📋", title: "Pedidos",   desc: "Administrar pedidos",         path: "/pedidos",   color: "#ef4444" },
-    { icon: "📝", title: "PQRS",      desc: "Atender PQRS",               path: "/pqrs",      color: "#f97316" }
+    { icon: "👥", title: "Usuarios",   desc: "Ver usuarios del sistema",    path: "/usuarios",                color: "#10b981" },
+    { icon: "📦", title: "Inventario", desc: "Control de productos y stock", path: "/inventario",              color: "#8b5cf6" },
+    { icon: "🛒", title: "Ventas",     desc: "Gestión de ventas",            path: "/ventas",                  color: "#f59e0b" },
+    { icon: "📋", title: "Pedidos",    desc: "Administrar pedidos",          path: "/pedido",                  color: "#ef4444" },
+    { icon: "🎨", title: "Personalizaciones", desc: "Gestión de personalizaciones", path: "/admin/personalizaciones", color: "#ec4899" },
+    { icon: "📝", title: "PQRS",       desc: "Atender PQRS",                path: "/pqrs",                    color: "#f97316" },
   ];
 
   const userModules = [
-    { icon: "🛒", title: "Mis Compras", desc: "Ver historial de compras",        path: "/mis-compras", color: "#10b981" },
-    { icon: "📋", title: "Mis Pedidos", desc: "Seguimiento de pedidos",          path: "/mis-pedidos", color: "#3b82f6" },
-    { icon: "🎨", title: "Personalizar",desc: "Crear diseños personalizados",    path: "/personalizar",color: "#ec4899" },
-    { icon: "📝", title: "Soporte",     desc: "Crear ticket de soporte",         path: "/soporte",     color: "#f59e0b" }
+    { icon: "🛒", title: "Mis Compras",  desc: "Ver historial de compras",     path: "/mis-compras",    color: "#10b981" },
+    { icon: "📋", title: "Mis Pedidos",  desc: "Seguimiento de pedidos",       path: "/mis-pedidos",    color: "#3b82f6" },
+    { icon: "🎨", title: "Personalizar", desc: "Crear diseños personalizados", path: "/personalizacion",color: "#ec4899" },
+    { icon: "📝", title: "Soporte",      desc: "Crear ticket de soporte",      path: "/soporte",        color: "#f59e0b" },
   ];
 
   if (loading) {
@@ -211,30 +211,27 @@ export default function Home() {
   const role = getRoleText(user.rol);
   const roleIcon = getRoleIcon(role);
 
-  // ✅ FIX: determinar módulos según rol
   let modules = userModules;
   if (user.rol === 1) modules = superAdminModules;
   else if (user.rol === 2) modules = adminModules;
 
   return (
     <div style={styles.container}>
-      <style>
-        {`
-          @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-          }
-          .module-hover:hover {
-            transform: translateY(-4px);
-            border-color: #444444 !important;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-          }
-          .logout-hover:hover {
-            background: #b91c1c !important;
-            transform: scale(1.05);
-          }
-        `}
-      </style>
+      <style>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        .module-hover:hover {
+          transform: translateY(-4px);
+          border-color: #444444 !important;
+          box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+        .logout-hover:hover {
+          background: #b91c1c !important;
+          transform: scale(1.05);
+        }
+      `}</style>
 
       <nav style={styles.nav}>
         <div style={styles.navContent}>
@@ -263,24 +260,12 @@ export default function Home() {
         <h2 style={styles.sectionTitle}>Módulos del Sistema</h2>
 
         <div style={styles.grid}>
-          {/* ✅ FIX: key={index} en lugar de key={post.id} que no existía */}
           {modules.map((module, index) => (
-            <a
-              key={index}
-              href={module.path}
-              style={styles.moduleCard}
-              className="module-hover"
-            >
+            <a key={index} href={module.path} style={styles.moduleCard} className="module-hover">
               <div style={styles.moduleIcon}>{module.icon}</div>
               <h3 style={styles.moduleTitle}>{module.title}</h3>
               <p style={styles.moduleDesc}>{module.desc}</p>
-              <div style={{
-                marginTop: '16px',
-                width: '40px',
-                height: '3px',
-                background: module.color,
-                borderRadius: '2px'
-              }}></div>
+              <div style={{ marginTop: '16px', width: '40px', height: '3px', background: module.color, borderRadius: '2px' }}></div>
             </a>
           ))}
         </div>

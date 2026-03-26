@@ -145,10 +145,10 @@ function App() {
               />
             </div>
 
-            {/* ✅ BLOQUE USUARIO CORREGIDO — el icono Mi Cuenta está DENTRO del condicional */}
+            
             {usuario ? (
               <>
-                {/* 👤 Icono Mi Cuenta — solo aparece si hay sesión iniciada */}
+         
                 <a
                   href="/mi-cuenta"
                   className="btn text-white me-2 d-flex align-items-center gap-1"

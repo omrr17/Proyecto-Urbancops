@@ -42,7 +42,8 @@ import Registros from "./components/registros.jsx";
 import Ventas from "./components/ventas.jsx";
 import RolesComponent from "./components/rol.jsx";
 import PqrsAdmin from "./components/PqrsAdmin.jsx";
-import PersonalizacionComponent from "./components/personalizacion.jsx";
+import PersonalizacionAdmin from "./components/personalizacion.jsx";       // ← CRUD admin
+import PersonalizacionUsuario from "./personalizacionUsuario.jsx";            // ← Diseñador usuario
 import Pedido from "./components/pedido.jsx";
 import Categorias from "./components/Categorias.jsx";
 
@@ -58,7 +59,6 @@ const PqrsRedirect = () => {
     : <Navigate to="/pqrs-publico" replace />;
 };
 
-// ✅ Fix: propTypes con children en ambos guards
 const ProtectedAdminRoute = ({ children }) => {
   const token    = localStorage.getItem('token');
   const userRole = localStorage.getItem('userRole');
@@ -66,23 +66,16 @@ const ProtectedAdminRoute = ({ children }) => {
   if (userRole !== 'admin') return <Navigate to="/" replace />;
   return children;
 };
-
-ProtectedAdminRoute.propTypes = {
-  children: PropTypes.node.isRequired,
-};
+ProtectedAdminRoute.propTypes = { children: PropTypes.node.isRequired };
 
 const ProtectedUserRoute = ({ children }) => {
   const token = localStorage.getItem('token');
   if (!token) return <Navigate to="/login" replace />;
   return children;
 };
+ProtectedUserRoute.propTypes = { children: PropTypes.node.isRequired };
 
-// ✅ Fix: propTypes con children
-ProtectedUserRoute.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-// ─── App ──────────────────────────────────────────────────────────────────────
+// ─── Render ───────────────────────────────────────────────────────────────────
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -94,33 +87,30 @@ createRoot(document.getElementById("root")).render(
           <Route path="/"     element={<App />} />
           <Route path="/home" element={<App />} />
 
-          <Route path="/lakers"    element={<Lakers />} />
-          <Route path="/chicago"   element={<Chicago />} />
-          <Route path="/boston"    element={<Boston />} />
-          <Route path="/white"     element={<White />} />
-          <Route path="/vegas"     element={<Vegas />} />
-          <Route path="/atlanta"   element={<Atlanta />} />
-          <Route path="/red"       element={<Red />} />
-          <Route path="/arizona"   element={<Arizona />} />
-          <Route path="/falcon"    element={<Falcon />} />
-          <Route path="/categorias"      element={<Categorias />} />
-          <Route path="/carrito"         element={<Carrito />} />
-          <Route path="/login"           element={<Login />} />
-          <Route path="/registrar"       element={<Registrar />} />
-          <Route path="/personalizacion" element={<PersonalizacionComponent />} />
-          <Route path="/mi-cuenta"       element={<ProtectedUserRoute><MiCuenta /></ProtectedUserRoute>} />
+          <Route path="/lakers"   element={<Lakers />} />
+          <Route path="/chicago"  element={<Chicago />} />
+          <Route path="/boston"   element={<Boston />} />
+          <Route path="/white"    element={<White />} />
+          <Route path="/vegas"    element={<Vegas />} />
+          <Route path="/atlanta"  element={<Atlanta />} />
+          <Route path="/red"      element={<Red />} />
+          <Route path="/arizona"  element={<Arizona />} />
+          <Route path="/falcon"   element={<Falcon />} />
+
+          <Route path="/categorias" element={<Categorias />} />
+          <Route path="/carrito"    element={<Carrito />} />
+          <Route path="/login"      element={<Login />} />
+          <Route path="/registrar"  element={<Registrar />} />
+
+          {/* ✅ /personalizacion → diseñador visual para USUARIOS */}
+          <Route path="/personalizacion" element={<PersonalizacionUsuario />} />
+
+          <Route path="/mi-cuenta" element={<ProtectedUserRoute><MiCuenta /></ProtectedUserRoute>} />
 
           {/* ── PQRS ── */}
           <Route path="/pqrs"         element={<PqrsRedirect />} />
           <Route path="/pqrs-publico" element={<PQRS />} />
-          <Route
-            path="/pqrs-admin"
-            element={
-              <ProtectedAdminRoute>
-                <PqrsAdmin />
-              </ProtectedAdminRoute>
-            }
-          />
+          <Route path="/pqrs-admin"   element={<ProtectedAdminRoute><PqrsAdmin /></ProtectedAdminRoute>} />
 
           {/* ── ADMIN ── */}
           <Route path="/admin"      element={<ProtectedAdminRoute><AdminHome /></ProtectedAdminRoute>} />
@@ -132,6 +122,9 @@ createRoot(document.getElementById("root")).render(
           <Route path="/registros"  element={<ProtectedAdminRoute><Registros /></ProtectedAdminRoute>} />
           <Route path="/ventas"     element={<ProtectedAdminRoute><Ventas /></ProtectedAdminRoute>} />
           <Route path="/pedido"     element={<ProtectedAdminRoute><Pedido /></ProtectedAdminRoute>} />
+
+          {/* ✅ /admin/personalizaciones → CRUD admin de personalizaciones */}
+          <Route path="/admin/personalizaciones" element={<ProtectedAdminRoute><PersonalizacionAdmin /></ProtectedAdminRoute>} />
 
           {/* ── 404 ── */}
           <Route path="*" element={<Navigate to="/" replace />} />
